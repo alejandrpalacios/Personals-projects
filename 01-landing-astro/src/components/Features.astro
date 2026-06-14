@@ -1,0 +1,93 @@
+---
+// Sección de características — mostrar el valor del producto
+
+const features = [
+  {
+    icon: '⚡',
+    title: 'Tableros en tiempo real',
+    description:
+      'Visualiza el estado de cada tarea al instante. Sin F5, sin pérdida de contexto entre tu equipo.',
+  },
+  {
+    icon: '🤖',
+    title: 'Automatizaciones con IA',
+    description:
+      'TaskFlow aprende de tu flujo de trabajo y sugiere automatizaciones para eliminar tareas repetitivas.',
+  },
+  {
+    icon: '🔗',
+    title: '+80 integraciones',
+    description:
+      'Conecta Slack, Notion, GitHub, Jira y más. Tu stack existente, sin migrar nada.',
+  },
+  {
+    icon: '📊',
+    title: 'Reportes accionables',
+    description:
+      'Dashboards listos para presentarle al cliente: velocidad del equipo, cuellos de botella y estimaciones.',
+  },
+  {
+    icon: '🛡️',
+    title: 'Permisos granulares',
+    description:
+      'Controla quién ve qué. Roles por proyecto, invitados externos y SSO para empresas.',
+  },
+  {
+    icon: '📱',
+    title: 'Nativo en móvil',
+    description:
+      'App progresiva que funciona offline. Actualiza tareas desde cualquier lugar sin perder datos.',
+  },
+];
+---
+
+<section class="features section" id="features">
+  <div class="container">
+    <div class="features__header">
+      <span class="section__label">Características</span>
+      <h2 class="section__title">Todo lo que tu equipo necesita, en un solo lugar</h2>
+      <p class="section__subtitle">
+        Diseñado para equipos que entregan rápido sin sacrificar calidad.
+      </p>
+    </div>
+
+    <div class="features__grid grid-3">
+      {features.map(feature => (
+        <article class="card feature-card">
+          <span class="feature-card__icon" aria-hidden="true">{feature.icon}</span>
+          <h3 class="feature-card__title">{feature.title}</h3>
+          <p class="feature-card__desc">{feature.description}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .features__header {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .feature-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .feature-card__icon {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .feature-card__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .feature-card__desc {
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+</style>

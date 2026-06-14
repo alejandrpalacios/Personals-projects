@@ -1,0 +1,157 @@
+---
+// Footer global
+const links = {
+  Producto: ['Características', 'Precios', 'Changelog', 'Roadmap'],
+  Recursos: ['Documentación', 'Blog', 'Tutoriales', 'Estado del sistema'],
+  Empresa: ['Sobre nosotros', 'Empleos', 'Prensa', 'Contacto'],
+  Legal: ['Privacidad', 'Términos', 'Cookies', 'Seguridad'],
+};
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <!-- Columna marca -->
+      <div class="footer__brand">
+        <a href="/" class="logo" aria-label="TaskFlow inicio">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="8" fill="#6366f1"/>
+            <path d="M8 14l4 4 8-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          TaskFlow
+        </a>
+        <p class="footer__tagline">
+          Gestiona proyectos con claridad total.<br />
+          Hecho para equipos que entregan.
+        </p>
+      </div>
+
+      <!-- Columnas de enlaces -->
+      {Object.entries(links).map(([section, items]) => (
+        <div class="footer__col">
+          <h4 class="footer__col-title">{section}</h4>
+          <ul role="list">
+            {items.map(item => (
+              <li>
+                <a href="#" class="footer__link">{item}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <hr class="divider" />
+
+    <div class="footer__bottom">
+      <p>&copy; {new Date().getFullYear()} TaskFlow Inc. Todos los derechos reservados.</p>
+      <!-- Redes sociales — reemplazar hrefs -->
+      <div class="footer__social" role="list" aria-label="Redes sociales">
+        <a href="#" aria-label="Twitter / X">𝕏</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+        <a href="#" aria-label="GitHub">GH</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--color-border);
+    padding-block: var(--space-xl) var(--space-lg);
+    margin-top: var(--space-2xl);
+  }
+
+  .footer__top {
+    display: grid;
+    grid-template-columns: 2fr repeat(4, 1fr);
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+  }
+
+  .footer__tagline {
+    margin-top: var(--space-sm);
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .footer__col-title {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+  }
+
+  .footer__col ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .footer__link {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    transition: color 200ms;
+  }
+
+  .footer__link:hover {
+    color: var(--color-text);
+  }
+
+  .footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--space-md);
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  .footer__social {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .footer__social a {
+    color: var(--color-text-muted);
+    transition: color 200ms;
+    font-weight: 600;
+  }
+
+  .footer__social a:hover {
+    color: var(--color-text);
+  }
+
+  @media (max-width: 900px) {
+    .footer__top {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer__brand {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .footer__top {
+      grid-template-columns: 1fr;
+    }
+
+    .footer__bottom {
+      flex-direction: column;
+      gap: var(--space-sm);
+      text-align: center;
+    }
+  }
+</style>

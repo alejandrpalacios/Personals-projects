@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =============================================
+   VARIABLES DE DISEÑO
+   ============================================= */
+:root {
+  --font-inter: 'Inter', system-ui, sans-serif;
+  --font-playfair: 'Playfair Display', Georgia, serif;
+}
+
+/* =============================================
+   BASE
+   ============================================= */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-neutral-50 text-neutral-900 antialiased;
+    font-family: var(--font-inter);
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-playfair);
+  }
+}
+
+/* =============================================
+   COMPONENTES REUTILIZABLES
+   ============================================= */
+@layer components {
+  /* Botón de compra principal */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-neutral-900 text-white
+           text-sm font-medium tracking-wide uppercase
+           hover:bg-neutral-700 active:scale-[0.98]
+           transition-all duration-200 cursor-pointer;
+  }
+
+  /* Botón secundario / contorno */
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 border border-neutral-900 text-neutral-900
+           text-sm font-medium tracking-wide uppercase
+           hover:bg-neutral-900 hover:text-white
+           transition-all duration-200 cursor-pointer;
+  }
+
+  /* Enlace de navegación */
+  .nav-link {
+    @apply text-sm text-neutral-600 hover:text-neutral-900 tracking-wide transition-colors duration-150;
+  }
+
+  /* Etiqueta de categoría / badge */
+  .category-badge {
+    @apply inline-block px-3 py-1 text-xs tracking-widest uppercase text-neutral-500 border border-neutral-200;
+  }
+
+  /* Input de formulario */
+  .form-input {
+    @apply w-full px-4 py-3 border border-neutral-300 text-sm
+           focus:outline-none focus:border-neutral-900
+           placeholder:text-neutral-400 transition-colors duration-150;
+  }
+}

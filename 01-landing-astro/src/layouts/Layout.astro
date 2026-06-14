@@ -1,0 +1,42 @@
+---
+// Layout base — envuelve todas las páginas
+// Props: title, description para SEO
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'TaskFlow — Gestión de proyectos inteligente',
+  description = 'Centraliza tu equipo, automatiza tareas y entrega proyectos a tiempo con TaskFlow.',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+
+    <!-- Open Graph — reemplazar imagen real -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+
+    <!-- Favicon — reemplazar con branding real -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fuente del sistema — sin petición externa -->
+    <title>{title}</title>
+
+    <style is:global>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    </style>
+  </head>
+
+  <body>
+    <!-- El contenido de cada página se inyecta aquí -->
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,177 @@
+---
+// Navegación principal — sticky con efecto blur al hacer scroll
+const navLinks = [
+  { label: 'Características', href: '#features' },
+  { label: 'Cómo funciona', href: '#how-it-works' },
+  { label: 'Precios', href: '#pricing' },
+  { label: 'Testimonios', href: '#testimonials' },
+];
+---
+
+<header class="header" id="header">
+  <div class="container">
+    <nav class="nav">
+      <!-- Logo -->
+      <a href="/" class="logo" aria-label="TaskFlow inicio">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <rect width="28" height="28" rx="8" fill="#6366f1"/>
+          <path d="M8 14l4 4 8-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>TaskFlow</span>
+      </a>
+
+      <!-- Links de navegación -->
+      <ul class="nav__links" role="list">
+        {navLinks.map(link => (
+          <li>
+            <a href={link.href} class="nav__link">{link.label}</a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- CTA + toggle móvil -->
+      <div class="nav__actions">
+        <a href="#" class="btn btn--ghost btn--sm">Iniciar sesión</a>
+        <a href="#pricing" class="btn btn--primary btn--sm">Empezar gratis</a>
+      </div>
+
+      <!-- Botón hamburguesa móvil -->
+      <button class="nav__toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding-block: 1rem;
+    transition: background-color 200ms ease, border-color 200ms ease;
+  }
+
+  /* Clase añadida por JS al hacer scroll */
+  .header.scrolled {
+    background: rgba(15, 15, 19, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  .nav__links {
+    display: flex;
+    list-style: none;
+    gap: var(--space-md);
+    margin-inline: auto;
+  }
+
+  .nav__link {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    transition: color 200ms;
+  }
+
+  .nav__link:hover {
+    color: var(--color-text);
+  }
+
+  .nav__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .btn--sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .nav__toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+  }
+
+  .nav__toggle span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--color-text);
+    border-radius: 2px;
+    transition: transform 200ms ease;
+  }
+
+  @media (max-width: 768px) {
+    .nav__links,
+    .nav__actions {
+      display: none;
+    }
+
+    .nav__toggle {
+      display: flex;
+      margin-left: auto;
+    }
+
+    /* Menú abierto en móvil */
+    .nav.open .nav__links,
+    .nav.open .nav__actions {
+      display: flex;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      padding: var(--space-md);
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .nav.open .nav__links {
+      top: 60px;
+    }
+
+    .nav.open .nav__actions {
+      top: auto;
+    }
+  }
+</style>
+
+<script>
+  // Efecto scroll en el header
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    header?.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Toggle menú móvil
+  const toggle = document.getElementById('navToggle');
+  const nav = toggle?.closest('.nav');
+  toggle?.addEventListener('click', () => {
+    const isOpen = nav?.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+</script>

@@ -1,0 +1,203 @@
+---
+// Sección de precios — estructura de 3 planes escalable
+
+const plans = [
+  {
+    name: 'Starter',
+    price: '$0',
+    period: 'para siempre',
+    description: 'Para freelancers y equipos pequeños que están empezando.',
+    cta: 'Empezar gratis',
+    ctaHref: '#',
+    featured: false,
+    features: [
+      'Hasta 3 proyectos activos',
+      '5 miembros por equipo',
+      'Tableros Kanban y lista',
+      '2 GB de almacenamiento',
+      'Soporte por correo',
+    ],
+  },
+  {
+    name: 'Pro',
+    price: '$18',
+    period: 'por usuario / mes',
+    description: 'Para equipos en crecimiento que necesitan potencia y control.',
+    cta: 'Prueba 14 días gratis',
+    ctaHref: '#',
+    featured: true, // plan destacado
+    features: [
+      'Proyectos ilimitados',
+      'Miembros ilimitados',
+      'Automatizaciones con IA',
+      '50 GB de almacenamiento',
+      '+80 integraciones',
+      'Reportes avanzados',
+      'Soporte prioritario',
+    ],
+  },
+  {
+    name: 'Enterprise',
+    price: 'A medida',
+    period: 'contactar ventas',
+    description: 'Para organizaciones que requieren seguridad y compliance.',
+    cta: 'Hablar con ventas',
+    ctaHref: '#',
+    featured: false,
+    features: [
+      'Todo en Pro',
+      'SSO / SAML',
+      'Permisos granulares',
+      'SLA 99.9%',
+      'Almacenamiento ilimitado',
+      'Gerente de cuenta dedicado',
+      'Auditoría y compliance',
+    ],
+  },
+];
+---
+
+<section class="pricing section" id="pricing">
+  <div class="container">
+    <div class="pricing__header">
+      <span class="section__label">Precios</span>
+      <h2 class="section__title">Elige el plan que escala contigo</h2>
+      <p class="section__subtitle">Sin contratos. Cancela cuando quieras.</p>
+    </div>
+
+    <div class="pricing__grid">
+      {plans.map(plan => (
+        <article class={`pricing-card ${plan.featured ? 'pricing-card--featured' : ''}`}>
+          {plan.featured && <span class="pricing-card__badge">Más popular</span>}
+
+          <div class="pricing-card__header">
+            <h3 class="pricing-card__name">{plan.name}</h3>
+            <div class="pricing-card__price">
+              <span class="price-amount">{plan.price}</span>
+              <span class="price-period">{plan.period}</span>
+            </div>
+            <p class="pricing-card__desc">{plan.description}</p>
+          </div>
+
+          <a href={plan.ctaHref} class={`btn ${plan.featured ? 'btn--primary' : 'btn--ghost'} btn--full`}>
+            {plan.cta}
+          </a>
+
+          <ul class="pricing-card__features" role="list">
+            {plan.features.map(f => (
+              <li class="feature-item">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M3 8l3.5 3.5 6.5-7" stroke="#6366f1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                {f}
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing__header {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+  }
+
+  .pricing__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-md);
+    align-items: start;
+  }
+
+  .pricing-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    position: relative;
+  }
+
+  /* El plan destacado tiene más énfasis visual */
+  .pricing-card--featured {
+    border-color: var(--color-primary);
+    background: var(--color-surface-2);
+    box-shadow: var(--shadow-glow);
+    transform: scale(1.02);
+  }
+
+  .pricing-card__badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.8rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .pricing-card__name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .pricing-card__price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    margin-top: 0.25rem;
+  }
+
+  .price-amount {
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+  }
+
+  .price-period {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+  }
+
+  .pricing-card__desc {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+  }
+
+  .btn--full {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pricing-card__features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.88rem;
+  }
+
+  @media (max-width: 860px) {
+    .pricing-card--featured {
+      transform: none;
+    }
+  }
+</style>

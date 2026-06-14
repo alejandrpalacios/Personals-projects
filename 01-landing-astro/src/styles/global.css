@@ -1,0 +1,205 @@
+/* =============================================
+   DESIGN TOKENS — cambiar aquí afecta todo el sitio
+   ============================================= */
+:root {
+  /* Colores principales */
+  --color-primary: #6366f1;
+  --color-primary-dark: #4f46e5;
+  --color-primary-light: #a5b4fc;
+
+  /* Neutros */
+  --color-bg: #0f0f13;
+  --color-surface: #1a1a24;
+  --color-surface-2: #242432;
+  --color-border: #2e2e42;
+  --color-text: #f1f1f3;
+  --color-text-muted: #8b8ba0;
+
+  /* Tipografía */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Espaciado base */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+
+  /* Radio */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  /* Sombras */
+  --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.15);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+
+  /* Transiciones */
+  --transition: 200ms ease;
+}
+
+/* =============================================
+   RESET MÍNIMO
+   ============================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, video {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =============================================
+   UTILIDADES GLOBALES
+   ============================================= */
+.container {
+  width: 100%;
+  max-width: 1160px;
+  margin-inline: auto;
+  padding-inline: var(--space-md);
+}
+
+.section {
+  padding-block: var(--space-2xl);
+}
+
+.section__label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary-light);
+  margin-bottom: var(--space-sm);
+}
+
+.section__title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  max-width: 36ch;
+}
+
+.section__subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  max-width: 52ch;
+  margin-top: var(--space-sm);
+}
+
+/* Botones */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn--primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn--ghost:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary-light);
+}
+
+/* Card base */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Grillas responsivas */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-md);
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-md);
+}
+
+/* Badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: rgba(99, 102, 241, 0.12);
+  color: var(--color-primary-light);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+/* Divisor */
+.divider {
+  height: 1px;
+  background: var(--color-border);
+  border: none;
+}
+
+/* =============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================= */
+@media (max-width: 768px) {
+  .section {
+    padding-block: var(--space-xl);
+  }
+}
