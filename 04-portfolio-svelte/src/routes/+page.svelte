@@ -1,12 +1,14 @@
 <script>
+  import { lang } from '$lib/stores/lang.js';
+  import { t } from '$lib/i18n/translations.js';
   import { PROJECTS, SKILLS } from '$lib/data/projects.js';
 
-  const featured = PROJECTS.filter(p => p.featured);
+  $: featured = PROJECTS.filter(p => p.featured);
 </script>
 
 <svelte:head>
-  <title>AlexDev — Desarrollador Frontend</title>
-  <meta name="description" content="Desarrollador frontend especializado en React, Next.js, Vue y SvelteKit. Construyo interfaces rápidas, accesibles y escalables." />
+  <title>AlexDev — Frontend Developer</title>
+  <meta name="description" content="Frontend developer specialized in React, Next.js, Vue and SvelteKit." />
 </svelte:head>
 
 <!-- ——— HERO ——— -->
@@ -14,28 +16,24 @@
   <div class="container">
     <p class="hero__eyebrow">
       <span class="dot" aria-hidden="true"></span>
-      Disponible para proyectos freelance
+      {t($lang, 'hero.available')}
     </p>
 
     <h1 class="hero__title">
-      Construyo<br />
-      <em class="hero__title--accent">interfaces</em> que<br />
-      <em class="hero__title--accent">funcionan</em>.
+      {t($lang, 'hero.title-1')}<br />
+      <em class="hero__title--accent">{t($lang, 'hero.title-2')}</em> {t($lang, 'hero.title-3')}<br />
+      <em class="hero__title--accent">{t($lang, 'hero.title-4')}</em>.
     </h1>
 
-    <p class="hero__bio">
-      Hola, soy <strong>Alejandro</strong> — desarrollador frontend con foco en
-      Next.js, Vue y SvelteKit. Creo páginas rápidas, accesibles y listas para escalar.
-      {/* Reemplazar con tu descripción real */}
-    </p>
+    <!-- innerHTML para el <strong> en la bio -->
+    <p class="hero__bio">{@html t($lang, 'hero.bio')}</p>
 
     <div class="hero__cta">
-      <a href="/proyectos" class="btn">Ver proyectos</a>
-      <a href="/contacto" class="btn btn--outline">Hablemos →</a>
+      <a href="/proyectos" class="btn">{t($lang, 'hero.cta-projects')}</a>
+      <a href="/contacto" class="btn btn--outline">{t($lang, 'hero.cta-contact')}</a>
     </div>
 
-    <!-- Stack tecnológico condensado -->
-    <div class="tech-stack" aria-label="Tecnologías">
+    <div class="tech-stack" aria-label="Technologies">
       {#each ['Astro', 'Next.js', 'Vue 3', 'SvelteKit', 'TypeScript', 'Tailwind'] as tech}
         <span class="tech-tag">{tech}</span>
       {/each}
@@ -47,16 +45,15 @@
 <section class="section" id="proyectos">
   <div class="container">
     <div class="section-header">
-      <h2 class="section-title">Proyectos destacados</h2>
-      <a href="/proyectos" class="section-link">Ver todos →</a>
+      <h2 class="section-title">{t($lang, 'featured.title')}</h2>
+      <a href="/proyectos" class="section-link">{t($lang, 'featured.link')}</a>
     </div>
 
     <div class="projects-grid">
       {#each featured as project (project.id)}
         <a href="/proyectos/{project.slug}" class="project-card" style="--card-color: {project.coverColor}">
-          <!-- Cover del proyecto — reemplazar con screenshot real -->
           <div class="project-card__cover">
-            <span class="project-card__emoji" aria-hidden="true">
+            <span aria-hidden="true">
               {project.category === 'Landing Page' ? '🚀' :
                project.category === 'E-commerce'  ? '🛍️' :
                project.category === 'Dashboard'   ? '📊' : '✨'}
@@ -82,9 +79,9 @@
 </section>
 
 <!-- ——— SKILLS ——— -->
-<section class="section skills-section" id="skills">
+<section class="section skills-section">
   <div class="container">
-    <h2 class="section-title" style="margin-bottom: 2.5rem">Stack técnico</h2>
+    <h2 class="section-title" style="margin-bottom: 2.5rem">{t($lang, 'skills.title')}</h2>
     <div class="skills-grid">
       {#each SKILLS as group}
         <div class="skill-group">
@@ -104,15 +101,14 @@
 <section class="cta-banner section">
   <div class="container">
     <div class="cta-inner">
-      <h2 class="cta-title">¿Tienes un proyecto en mente?</h2>
-      <p class="cta-sub">Cuéntame de qué se trata — respondo en menos de 24 horas.</p>
-      <a href="/contacto" class="btn">Escribirme →</a>
+      <h2 class="cta-title">{t($lang, 'cta.title')}</h2>
+      <p class="cta-sub">{t($lang, 'cta.sub')}</p>
+      <a href="/contacto" class="btn">{t($lang, 'cta.btn')}</a>
     </div>
   </div>
 </section>
 
 <style>
-  /* ——— HERO ——— */
   .hero {
     min-height: calc(100vh - var(--nav-h));
     display: flex;
@@ -121,15 +117,12 @@
     overflow: hidden;
   }
 
-  /* Fondo decorativo */
   .hero::before {
     content: '';
     position: absolute;
-    top: -20%;
-    right: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(249, 115, 22, 0.08) 0%, transparent 70%);
+    top: -20%; right: -10%;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%);
     pointer-events: none;
   }
 
@@ -143,18 +136,14 @@
   }
 
   .dot {
-    width: 8px;
-    height: 8px;
+    width: 8px; height: 8px;
     border-radius: 50%;
-    background: #22c55e; /* verde = disponible */
+    background: #22c55e;
     box-shadow: 0 0 6px #22c55e;
     animation: pulse 2s infinite;
   }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
 
   .hero__title {
     font-family: var(--font-display);
@@ -178,14 +167,9 @@
     margin-bottom: 2rem;
   }
 
-  .hero__bio strong { color: var(--color-text); }
+  :global(.hero__bio strong) { color: var(--color-text); }
 
-  .hero__cta {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-bottom: 2.5rem;
-  }
+  .hero__cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
 
   .btn {
     display: inline-flex;
@@ -207,16 +191,9 @@
     color: var(--color-text);
   }
 
-  .btn--outline:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-  }
+  .btn--outline:hover { border-color: var(--color-accent); color: var(--color-accent); }
 
-  .tech-stack {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
+  .tech-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
   .tech-tag {
     padding: 0.3rem 0.8rem;
@@ -226,13 +203,7 @@
     color: var(--color-muted);
   }
 
-  /* ——— SECCIÓN PROJECTS ——— */
-  .section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 2rem;
-  }
+  .section-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2rem; }
 
   .section-title {
     font-family: var(--font-display);
@@ -240,19 +211,10 @@
     letter-spacing: -0.02em;
   }
 
-  .section-link {
-    font-size: 0.9rem;
-    color: var(--color-accent);
-    transition: opacity var(--transition);
-  }
-
+  .section-link { font-size: 0.9rem; color: var(--color-accent); transition: opacity var(--transition); }
   .section-link:hover { opacity: 0.75; }
 
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.25rem;
-  }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; }
 
   .project-card {
     display: block;
@@ -262,10 +224,7 @@
     transition: border-color var(--transition), transform var(--transition);
   }
 
-  .project-card:hover {
-    border-color: var(--color-accent);
-    transform: translateY(-2px);
-  }
+  .project-card:hover { border-color: var(--color-accent); transform: translateY(-2px); }
 
   .project-card__cover {
     height: 180px;
@@ -276,36 +235,14 @@
     font-size: 3rem;
   }
 
-  .project-card__body {
-    padding: 1.25rem;
-    background: var(--color-surface);
-  }
+  .project-card__body { padding: 1.25rem; background: var(--color-surface); }
 
-  .project-card__meta {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-  }
+  .project-card__meta { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
 
-  .project-category {
-    font-size: 0.75rem;
-    color: var(--color-accent);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
+  .project-category { font-size: 0.75rem; color: var(--color-accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .project-year { font-size: 0.75rem; color: var(--color-muted); }
 
-  .project-year {
-    font-size: 0.75rem;
-    color: var(--color-muted);
-  }
-
-  .project-card__title {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-    letter-spacing: -0.01em;
-  }
+  .project-card__title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
 
   .project-card__desc {
     font-size: 0.85rem;
@@ -318,80 +255,30 @@
     overflow: hidden;
   }
 
-  .project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
   .tag {
     padding: 0.2rem 0.6rem;
-    background: rgba(249, 115, 22, 0.1);
+    background: rgba(249,115,22,0.1);
     color: var(--color-accent-2);
     border-radius: 4px;
     font-size: 0.72rem;
     font-weight: 500;
   }
 
-  /* ——— SKILLS ——— */
-  .skills-section {
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
-  }
+  .skills-section { border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
 
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-  }
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
 
-  .skill-group__title {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--color-muted);
-    margin-bottom: 1rem;
-  }
+  .skill-group__title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-muted); margin-bottom: 1rem; }
 
-  .skill-group__list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
+  .skill-group__list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
 
-  .skill-item {
-    font-size: 0.92rem;
-    color: var(--color-text);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
+  .skill-item { font-size: 0.92rem; color: var(--color-text); display: flex; align-items: center; gap: 0.5rem; }
+  .skill-item::before { content: '—'; color: var(--color-accent); font-weight: 700; }
 
-  .skill-item::before {
-    content: '—';
-    color: var(--color-accent);
-    font-weight: 700;
-  }
+  .cta-inner { text-align: center; max-width: 600px; margin-inline: auto; }
 
-  /* ——— CTA FINAL ——— */
-  .cta-inner {
-    text-align: center;
-    max-width: 600px;
-    margin-inline: auto;
-  }
-
-  .cta-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 4vw, 2.5rem);
-    letter-spacing: -0.02em;
-    margin-bottom: 0.75rem;
-  }
-
-  .cta-sub {
-    color: var(--color-muted);
-    margin-bottom: 1.5rem;
-    font-size: 1.05rem;
-  }
+  .cta-title { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.5rem); letter-spacing: -0.02em; margin-bottom: 0.75rem; }
+  .cta-sub { color: var(--color-muted); margin-bottom: 1.5rem; font-size: 1.05rem; }
 </style>

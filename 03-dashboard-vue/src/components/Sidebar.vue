@@ -1,6 +1,5 @@
 <template>
   <aside class="sidebar">
-    <!-- Logo -->
     <div class="sidebar__logo">
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
         <rect width="28" height="28" rx="6" fill="#3b82f6"/>
@@ -9,58 +8,51 @@
       <span>AdminPro</span>
     </div>
 
-    <!-- Navegación principal -->
     <nav class="sidebar__nav">
       <ul role="list">
-        <li v-for="route in mainRoutes" :key="route.name">
-          <RouterLink
-            :to="route.path"
-            class="sidebar__link"
-            active-class="sidebar__link--active"
-          >
-            <span class="sidebar__icon" aria-hidden="true">{{ route.meta.icon }}</span>
-            <span>{{ route.meta.title }}</span>
+        <li v-for="item in mainNav" :key="item.name">
+          <RouterLink :to="item.path" class="sidebar__link" active-class="sidebar__link--active">
+            <span class="sidebar__icon" aria-hidden="true">{{ item.icon }}</span>
+            <span>{{ t.value(item.labelKey) }}</span>
           </RouterLink>
         </li>
       </ul>
     </nav>
 
-    <!-- Separador -->
     <hr class="sidebar__divider" />
 
-    <!-- Enlace de configuración al fondo -->
     <RouterLink to="/configuracion" class="sidebar__link" active-class="sidebar__link--active">
       <span class="sidebar__icon" aria-hidden="true">⚙️</span>
-      <span>Configuración</span>
+      <span>{{ t.value('nav.settings') }}</span>
     </RouterLink>
 
-    <!-- Usuario activo -->
     <div class="sidebar__user">
       <div class="sidebar__avatar" aria-hidden="true">AD</div>
       <div class="sidebar__user-info">
         <p class="sidebar__user-name">Admin Demo</p>
-        <p class="sidebar__user-role">Administrador</p>
+        <p class="sidebar__user-role">Administrator</p>
       </div>
     </div>
   </aside>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router';
+import { useLang } from '@/i18n/index.js';
 
-const router = useRouter();
-// Filtra las rutas a mostrar en el nav principal (excluye config, que va abajo)
-const mainRoutes = router.getRoutes().filter(
-  r => r.name && !['Configuracion', undefined].includes(r.name)
-);
+const { t } = useLang();
+
+const mainNav = [
+  { name: 'Dashboard', path: '/dashboard',    icon: '📊', labelKey: 'nav.dashboard'  },
+  { name: 'Pedidos',   path: '/pedidos',      icon: '📦', labelKey: 'nav.orders'     },
+  { name: 'Productos', path: '/productos',    icon: '🏷️', labelKey: 'nav.products'   },
+  { name: 'Clientes',  path: '/clientes',     icon: '👥', labelKey: 'nav.customers'  },
+];
 </script>
 
 <style scoped>
 .sidebar {
   position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  left: 0; top: 0; bottom: 0;
   width: var(--sidebar-width);
   background: var(--sidebar-bg);
   display: flex;
@@ -80,16 +72,9 @@ const mainRoutes = router.getRoutes().filter(
   font-size: 1rem;
 }
 
-.sidebar__nav {
-  flex: 1;
-}
+.sidebar__nav { flex: 1; }
 
-.sidebar__nav ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
+.sidebar__nav ul { list-style: none; display: flex; flex-direction: column; gap: 2px; }
 
 .sidebar__link {
   display: flex;
@@ -101,29 +86,15 @@ const mainRoutes = router.getRoutes().filter(
   font-size: 13px;
   font-weight: 500;
   transition: background 150ms ease, color 150ms ease;
+  text-decoration: none;
 }
 
-.sidebar__link:hover {
-  background: rgba(255, 255, 255, 0.07);
-  color: var(--sidebar-text-active);
-}
+.sidebar__link:hover { background: rgba(255,255,255,0.07); color: var(--sidebar-text-active); }
+.sidebar__link--active { background: rgba(59,130,246,0.15); color: #93c5fd; }
 
-.sidebar__link--active {
-  background: rgba(59, 130, 246, 0.15);
-  color: #93c5fd;
-}
+.sidebar__icon { font-size: 1rem; width: 20px; text-align: center; }
 
-.sidebar__icon {
-  font-size: 1rem;
-  width: 20px;
-  text-align: center;
-}
-
-.sidebar__divider {
-  border: none;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  margin: 12px 0;
-}
+.sidebar__divider { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 12px 0; }
 
 .sidebar__user {
   display: flex;
@@ -136,27 +107,17 @@ const mainRoutes = router.getRoutes().filter(
 }
 
 .sidebar__avatar {
-  width: 32px;
-  height: 32px;
+  width: 32px; height: 32px;
   border-radius: 50%;
   background: var(--color-info);
   color: #fff;
+  font-size: 11px; font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
   flex-shrink: 0;
 }
 
-.sidebar__user-name {
-  font-size: 12px;
-  font-weight: 600;
-  color: #fff;
-}
-
-.sidebar__user-role {
-  font-size: 11px;
-  color: var(--sidebar-text);
-}
+.sidebar__user-name { font-size: 12px; font-weight: 600; color: #fff; }
+.sidebar__user-role { font-size: 11px; color: var(--sidebar-text); }
 </style>

@@ -1,0 +1,120 @@
+---
+// Selector de idioma — se hidrata completamente en cliente
+---
+
+<div class="lang-selector">
+  <button class="lang-selector__toggle" id="langToggle" aria-label="Select language" aria-haspopup="listbox" aria-expanded="false">
+    <span id="langCurrent">EN</span>
+    <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+      <path d="M1 3l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+
+  <ul class="lang-selector__menu" id="langMenu" role="listbox" hidden>
+    <li role="option"><button class="lang-option" data-lang="en">🇺🇸 English</button></li>
+    <li role="option"><button class="lang-option" data-lang="es">🇪🇸 Español</button></li>
+    <li role="option"><button class="lang-option" data-lang="fr">🇫🇷 Français</button></li>
+  </ul>
+</div>
+
+<script>
+  const labels = { en: 'EN', es: 'ES', fr: 'FR' };
+  const toggle   = document.getElementById('langToggle');
+  const menu     = document.getElementById('langMenu');
+  const current  = document.getElementById('langCurrent');
+
+  function openMenu() {
+    menu.hidden = false;
+    toggle.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeMenu() {
+    menu.hidden = true;
+    toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  toggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    menu.hidden ? openMenu() : closeMenu();
+  });
+
+  document.querySelectorAll('.lang-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.getAttribute('data-lang');
+      // Llama a la función global definida en Layout.astro
+      window.__setLang(lang);
+      current.textContent = labels[lang];
+      closeMenu();
+    });
+  });
+
+  // Cierra al hacer clic fuera
+  document.addEventListener('click', () => closeMenu());
+
+  // Sincroniza el label con el idioma guardado
+  const saved = localStorage.getItem('lang') || 'en';
+  if (current) current.textContent = labels[saved] || 'EN';
+</script>
+
+<style>
+  .lang-selector {
+    position: relative;
+  }
+
+  .lang-selector__toggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color var(--transition), color var(--transition);
+  }
+
+  .lang-selector__toggle:hover {
+    border-color: var(--color-primary);
+    color: var(--color-text);
+  }
+
+  .lang-selector__menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    list-style: none;
+    padding: 4px;
+    min-width: 140px;
+    z-index: 200;
+    box-shadow: var(--shadow-card);
+  }
+
+  .lang-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    padding: 7px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+    transition: background 150ms, color 150ms;
+  }
+
+  .lang-option:hover {
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--color-text);
+  }
+</style>

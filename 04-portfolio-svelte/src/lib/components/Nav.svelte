@@ -1,24 +1,24 @@
 <script>
   import { page } from '$app/stores';
+  import { lang } from '$lib/stores/lang.js';
+  import { t } from '$lib/i18n/translations.js';
+  import LangSelector from './LangSelector.svelte';
+
   let menuOpen = false;
 
-  const links = [
-    { label: 'Inicio',     href: '/'          },
-    { label: 'Proyectos',  href: '/proyectos'  },
-    { label: 'Sobre mí',   href: '/sobre-mi'   },
-    { label: 'Contacto',   href: '/contacto'   },
+  $: links = [
+    { key: 'nav.home',     href: '/'          },
+    { key: 'nav.projects', href: '/proyectos'  },
+    { key: 'nav.contact',  href: '/contacto'   },
   ];
 
-  // Cierra el menú al navegar
   $: if ($page.url.pathname) menuOpen = false;
 </script>
 
-<nav class="nav" aria-label="Navegación principal">
+<nav class="nav" aria-label="Main navigation">
   <div class="container nav__inner">
-    <!-- Logo / firma -->
-    <a href="/" class="nav__logo" aria-label="Ir al inicio">
+    <a href="/" class="nav__logo" aria-label="Go to home">
       <span class="logo-dot" aria-hidden="true"></span>
-      <!-- Reemplazar con nombre real -->
       <span>Alex<strong>Dev</strong></span>
     </a>
 
@@ -32,20 +32,23 @@
             class:nav__link--active={$page.url.pathname === link.href}
             aria-current={$page.url.pathname === link.href ? 'page' : undefined}
           >
-            {link.label}
+            {t($lang, link.key)}
           </a>
         </li>
       {/each}
     </ul>
 
-    <!-- CTA desktop -->
-    <a href="/contacto" class="btn-cta">Hablemos →</a>
+    <div class="nav__right">
+      <!-- Selector de idioma -->
+      <LangSelector />
+      <a href="/contacto" class="btn-cta">{t($lang, 'nav.cta')}</a>
+    </div>
 
     <!-- Toggle móvil -->
     <button
       class="nav__toggle"
       on:click={() => menuOpen = !menuOpen}
-      aria-label="Abrir menú"
+      aria-label="Open menu"
       aria-expanded={menuOpen}
     >
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -60,11 +63,10 @@
     </button>
   </div>
 
-  <!-- Menú móvil -->
   {#if menuOpen}
     <div class="nav__mobile">
       {#each links as link}
-        <a href={link.href} class="nav__mobile-link">{link.label}</a>
+        <a href={link.href} class="nav__mobile-link">{t($lang, link.key)}</a>
       {/each}
     </div>
   {/if}
@@ -73,12 +75,9 @@
 <style>
   .nav {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--nav-h);
+    top: 0; left: 0; right: 0;
     z-index: 100;
-    background: rgba(9, 9, 11, 0.85);
+    background: rgba(9,9,11,0.85);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-border);
   }
@@ -86,7 +85,7 @@
   .nav__inner {
     display: flex;
     align-items: center;
-    height: 100%;
+    height: var(--nav-h);
     gap: 2rem;
   }
 
@@ -100,8 +99,7 @@
   }
 
   .logo-dot {
-    width: 8px;
-    height: 8px;
+    width: 8px; height: 8px;
     border-radius: 50%;
     background: var(--color-accent);
   }
@@ -120,8 +118,12 @@
   }
 
   .nav__link:hover,
-  .nav__link--active {
-    color: var(--color-text);
+  .nav__link--active { color: var(--color-text); }
+
+  .nav__right {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
   }
 
   .btn-cta {
@@ -132,14 +134,11 @@
     font-size: 0.85rem;
     font-weight: 600;
     border-radius: 6px;
-    transition: opacity var(--transition), transform var(--transition);
+    transition: opacity var(--transition);
     white-space: nowrap;
   }
 
-  .btn-cta:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-  }
+  .btn-cta:hover { opacity: 0.9; }
 
   .nav__toggle {
     display: none;
@@ -168,14 +167,7 @@
   .nav__mobile-link:last-child { border-bottom: none; }
 
   @media (max-width: 700px) {
-    .nav__links,
-    .btn-cta { display: none; }
-
+    .nav__links, .btn-cta { display: none; }
     .nav__toggle { display: flex; }
-
-    .nav {
-      height: auto;
-      min-height: var(--nav-h);
-    }
   }
 </style>

@@ -1,42 +1,66 @@
 ---
-// Layout base — envuelve todas las páginas
-// Props: title, description para SEO
 interface Props {
   title?: string;
   description?: string;
 }
 
 const {
-  title = 'TaskFlow — Gestión de proyectos inteligente',
-  description = 'Centraliza tu equipo, automatiza tareas y entrega proyectos a tiempo con TaskFlow.',
+  title = 'TaskFlow — Smart project management',
+  description = 'Centralize your team, automate tasks, and deliver projects on time with TaskFlow.',
 } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
-
-    <!-- Open Graph — reemplazar imagen real -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-
-    <!-- Favicon — reemplazar con branding real -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-
-    <!-- Fuente del sistema — sin petición externa -->
     <title>{title}</title>
-
     <style is:global>
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
     </style>
   </head>
 
   <body>
-    <!-- El contenido de cada página se inyecta aquí -->
     <slot />
   </body>
 </html>
+
+<!--
+  Script i18n global — importa traducciones y expone window.__setLang()
+  Astro lo empaqueta como módulo ES (defer automático), así que el DOM
+  ya está listo cuando corre y no necesitamos DOMContentLoaded.
+-->
+<script>
+  import { ui, defaultLang } from '../i18n/translations.js';
+
+  function applyLang(lang) {
+    const t = ui[lang] || ui[defaultLang];
+
+    // Actualiza texto plano
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (t[key] != null) el.textContent = t[key];
+    });
+
+    // Actualiza texto con HTML (ej: etiquetas <strong>)
+    document.querySelectorAll('[data-i18n-html]').forEach(el => {
+      const key = el.dataset.i18nHtml;
+      if (t[key] != null) el.innerHTML = t[key];
+    });
+
+    document.documentElement.lang = lang;
+    localStorage.setItem('lang', lang);
+  }
+
+  // Expone la función para que LangSelector la llame
+  window.__setLang = applyLang;
+
+  // Aplica el idioma guardado al cargar la página
+  applyLang(localStorage.getItem('lang') || defaultLang);
+</script>

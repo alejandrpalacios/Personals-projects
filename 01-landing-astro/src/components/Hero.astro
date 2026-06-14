@@ -1,51 +1,42 @@
 ---
-// Sección hero — primera impresión del producto
 ---
 
 <section class="hero section">
   <div class="container">
-    <!-- Anuncio / novedad -->
     <div class="hero__announce">
       <span class="badge">
         <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="6"/></svg>
-        Nuevo — Integración con IA disponible
+        <span data-i18n="hero.badge">New — AI integration available</span>
       </span>
     </div>
 
-    <!-- Titular principal -->
     <h1 class="hero__title">
-      Gestiona proyectos con<br />
-      <span class="hero__title--accent">claridad total</span>
+      <span data-i18n="hero.title-1">Manage projects with</span><br />
+      <span class="hero__title--accent" data-i18n="hero.title-2">total clarity</span>
     </h1>
 
-    <p class="hero__subtitle">
-      TaskFlow centraliza tu equipo, automatiza el seguimiento de tareas
-      y te da visibilidad en tiempo real para entregar proyectos sin caos.
+    <p class="hero__subtitle" data-i18n="hero.subtitle">
+      TaskFlow centralizes your team, automates task tracking, and gives you real-time visibility to deliver projects without chaos.
     </p>
 
-    <!-- CTAs -->
     <div class="hero__cta">
       <a href="#pricing" class="btn btn--primary">
-        Empieza gratis — 14 días
+        <span data-i18n="hero.cta-1">Start free — 14 days</span>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <a href="#how-it-works" class="btn btn--ghost">
-        Ver demo
-      </a>
+      <a href="#how-it-works" class="btn btn--ghost" data-i18n="hero.cta-2">Watch demo</a>
     </div>
 
-    <!-- Prueba social rápida -->
-    <p class="hero__social-proof">
-      Más de <strong>2,400 equipos</strong> ya confían en TaskFlow — sin tarjeta de crédito
+    <!-- data-i18n-html porque contiene <strong> -->
+    <p class="hero__social-proof" data-i18n-html="hero.proof">
+      More than <strong>2,400 teams</strong> already trust TaskFlow — no credit card required
     </p>
 
-    <!-- Placeholder del producto / screenshot -->
-    <div class="hero__preview" aria-label="Vista previa del dashboard de TaskFlow">
+    <div class="hero__preview" aria-label="TaskFlow dashboard preview">
       <div class="hero__preview-inner">
-        <!-- Reemplazar con screenshot real del producto -->
         <div class="preview-placeholder">
-          <span>[ Screenshot del producto ]</span>
-          <p>Reemplazar con imagen real — recomendado: 1200×700 px</p>
+          <span>[ Product screenshot ]</span>
+          <p>Replace with real image — recommended: 1200×700 px</p>
         </div>
       </div>
     </div>
@@ -54,13 +45,12 @@
 
 <style>
   .hero {
-    padding-top: calc(var(--space-2xl) + 80px); /* compensa el header fijo */
+    padding-top: calc(var(--space-2xl) + 80px);
     text-align: center;
     position: relative;
     overflow: hidden;
   }
 
-  /* Fondo con gradiente radial sutil */
   .hero::before {
     content: '';
     position: absolute;
@@ -69,9 +59,7 @@
     pointer-events: none;
   }
 
-  .hero__announce {
-    margin-bottom: var(--space-md);
-  }
+  .hero__announce { margin-bottom: var(--space-md); }
 
   .hero__title {
     font-size: clamp(2.2rem, 6vw, 4rem);
@@ -83,7 +71,6 @@
   }
 
   .hero__title--accent {
-    /* Gradiente en el texto destacado */
     background: linear-gradient(135deg, #818cf8, #6366f1 50%, #a78bfa);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -112,11 +99,6 @@
     color: var(--color-text-muted);
   }
 
-  .hero__social-proof strong {
-    color: var(--color-text);
-  }
-
-  /* Preview del producto */
   .hero__preview {
     margin-top: var(--space-xl);
     border-radius: var(--radius-lg);
@@ -127,23 +109,15 @@
     position: relative;
   }
 
-  /* Degradado superior del preview para difuminarlo */
   .hero__preview::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(99,102,241,0.5), transparent);
   }
 
-  .hero__preview-inner {
-    padding: var(--space-lg);
-    min-height: 400px;
-    display: grid;
-    place-items: center;
-  }
+  .hero__preview-inner { padding: var(--space-lg); min-height: 400px; display: grid; place-items: center; }
 
   .preview-placeholder {
     color: var(--color-text-muted);
@@ -154,21 +128,10 @@
     width: 100%;
   }
 
-  .preview-placeholder span {
-    display: block;
-    font-size: 1.2rem;
-    margin-bottom: var(--space-xs);
-  }
-
-  .preview-placeholder p {
-    font-size: 0.8rem;
-    opacity: 0.6;
-  }
+  .preview-placeholder span { display: block; font-size: 1.2rem; margin-bottom: var(--space-xs); }
+  .preview-placeholder p    { font-size: 0.8rem; opacity: 0.6; }
 
   @media (max-width: 600px) {
-    .hero__cta {
-      flex-direction: column;
-      align-items: center;
-    }
+    .hero__cta { flex-direction: column; align-items: center; }
   }
 </style>

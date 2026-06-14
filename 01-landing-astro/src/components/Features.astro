@@ -1,62 +1,29 @@
 ---
-// Sección de características — mostrar el valor del producto
-
+// Los iconos permanecen igual — solo el texto cambia con data-i18n
 const features = [
-  {
-    icon: '⚡',
-    title: 'Tableros en tiempo real',
-    description:
-      'Visualiza el estado de cada tarea al instante. Sin F5, sin pérdida de contexto entre tu equipo.',
-  },
-  {
-    icon: '🤖',
-    title: 'Automatizaciones con IA',
-    description:
-      'TaskFlow aprende de tu flujo de trabajo y sugiere automatizaciones para eliminar tareas repetitivas.',
-  },
-  {
-    icon: '🔗',
-    title: '+80 integraciones',
-    description:
-      'Conecta Slack, Notion, GitHub, Jira y más. Tu stack existente, sin migrar nada.',
-  },
-  {
-    icon: '📊',
-    title: 'Reportes accionables',
-    description:
-      'Dashboards listos para presentarle al cliente: velocidad del equipo, cuellos de botella y estimaciones.',
-  },
-  {
-    icon: '🛡️',
-    title: 'Permisos granulares',
-    description:
-      'Controla quién ve qué. Roles por proyecto, invitados externos y SSO para empresas.',
-  },
-  {
-    icon: '📱',
-    title: 'Nativo en móvil',
-    description:
-      'App progresiva que funciona offline. Actualiza tareas desde cualquier lugar sin perder datos.',
-  },
+  { icon: '⚡', titleKey: 'feat-0-title', descKey: 'feat-0-desc', titleDefault: 'Real-time boards',       descDefault: 'See the status of every task instantly. No refreshing, no lost context.' },
+  { icon: '🤖', titleKey: 'feat-1-title', descKey: 'feat-1-desc', titleDefault: 'AI automations',         descDefault: 'TaskFlow learns from your workflow and suggests automations to eliminate repetitive tasks.' },
+  { icon: '🔗', titleKey: 'feat-2-title', descKey: 'feat-2-desc', titleDefault: '+80 integrations',       descDefault: 'Connect Slack, Notion, GitHub, Jira and more. Your existing stack, no migration needed.' },
+  { icon: '📊', titleKey: 'feat-3-title', descKey: 'feat-3-desc', titleDefault: 'Actionable reports',     descDefault: 'Dashboards ready to present to clients: team velocity, bottlenecks and estimates.' },
+  { icon: '🛡️', titleKey: 'feat-4-title', descKey: 'feat-4-desc', titleDefault: 'Granular permissions',   descDefault: 'Control who sees what. Per-project roles, external guests and SSO for enterprises.' },
+  { icon: '📱', titleKey: 'feat-5-title', descKey: 'feat-5-desc', titleDefault: 'Mobile native',           descDefault: 'Progressive app that works offline. Update tasks from anywhere without losing data.' },
 ];
 ---
 
 <section class="features section" id="features">
   <div class="container">
     <div class="features__header">
-      <span class="section__label">Características</span>
-      <h2 class="section__title">Todo lo que tu equipo necesita, en un solo lugar</h2>
-      <p class="section__subtitle">
-        Diseñado para equipos que entregan rápido sin sacrificar calidad.
-      </p>
+      <span class="section__label" data-i18n="features.label">Features</span>
+      <h2 class="section__title" data-i18n="features.title">Everything your team needs, in one place</h2>
+      <p class="section__subtitle" data-i18n="features.subtitle">Designed for teams that deliver fast without sacrificing quality.</p>
     </div>
 
     <div class="features__grid grid-3">
-      {features.map(feature => (
+      {features.map(f => (
         <article class="card feature-card">
-          <span class="feature-card__icon" aria-hidden="true">{feature.icon}</span>
-          <h3 class="feature-card__title">{feature.title}</h3>
-          <p class="feature-card__desc">{feature.description}</p>
+          <span class="feature-card__icon" aria-hidden="true">{f.icon}</span>
+          <h3 class="feature-card__title" data-i18n={f.titleKey}>{f.titleDefault}</h3>
+          <p  class="feature-card__desc"  data-i18n={f.descKey}>{f.descDefault}</p>
         </article>
       ))}
     </div>
@@ -64,30 +31,9 @@ const features = [
 </section>
 
 <style>
-  .features__header {
-    text-align: center;
-    margin-bottom: var(--space-xl);
-  }
-
-  .feature-card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-  }
-
-  .feature-card__icon {
-    font-size: 2rem;
-    line-height: 1;
-  }
-
-  .feature-card__title {
-    font-size: 1.1rem;
-    font-weight: 600;
-  }
-
-  .feature-card__desc {
-    font-size: 0.92rem;
-    color: var(--color-text-muted);
-    line-height: 1.65;
-  }
+  .features__header { text-align: center; margin-bottom: var(--space-xl); }
+  .feature-card { display: flex; flex-direction: column; gap: var(--space-sm); }
+  .feature-card__icon { font-size: 2rem; line-height: 1; }
+  .feature-card__title { font-size: 1.1rem; font-weight: 600; }
+  .feature-card__desc  { font-size: 0.92rem; color: var(--color-text-muted); line-height: 1.65; }
 </style>

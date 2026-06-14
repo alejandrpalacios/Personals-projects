@@ -1,47 +1,28 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
+import { LangProvider } from '@/context/LangContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
-// Fuentes tipadas para Next.js — se generan como variables CSS
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
-
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-playfair',
-  display: 'swap',
-});
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair', display: 'swap' });
 
 export const metadata: Metadata = {
-  title: {
-    template: '%s | Lumière',
-    default: 'Lumière — Moda consciente y atemporal',
-  },
-  description:
-    'Descubre piezas diseñadas para durar. Moda minimalista de autor con materiales sostenibles.',
-  openGraph: {
-    type: 'website',
-    locale: 'es_ES',
-    // url y images: reemplazar con los reales del cliente
-  },
+  title: { template: '%s | Lumière', default: 'Lumière — Conscious and timeless fashion' },
+  description: 'Discover pieces designed to last. Minimalist author fashion with sustainable materials.',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        {/* LangProvider debe ser Client Component — envuelve todo lo interactivo */}
+        <LangProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </LangProvider>
       </body>
     </html>
   );

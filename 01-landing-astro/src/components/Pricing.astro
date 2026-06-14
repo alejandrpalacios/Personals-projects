@@ -1,58 +1,28 @@
 ---
-// Sección de precios — estructura de 3 planes escalable
-
 const plans = [
   {
-    name: 'Starter',
-    price: '$0',
-    period: 'para siempre',
-    description: 'Para freelancers y equipos pequeños que están empezando.',
-    cta: 'Empezar gratis',
-    ctaHref: '#',
+    name: 'Starter', price: '$0',
+    periodKey: 'plan-0-period', periodDefault: 'forever',
+    descKey:   'plan-0-desc',   descDefault:   'For freelancers and small teams just getting started.',
+    ctaKey:    'plan-0-cta',    ctaDefault:    'Start for free',
     featured: false,
-    features: [
-      'Hasta 3 proyectos activos',
-      '5 miembros por equipo',
-      'Tableros Kanban y lista',
-      '2 GB de almacenamiento',
-      'Soporte por correo',
-    ],
+    features: ['Up to 3 active projects', '5 team members', 'Kanban & list boards', '2 GB storage', 'Email support'],
   },
   {
-    name: 'Pro',
-    price: '$18',
-    period: 'por usuario / mes',
-    description: 'Para equipos en crecimiento que necesitan potencia y control.',
-    cta: 'Prueba 14 días gratis',
-    ctaHref: '#',
-    featured: true, // plan destacado
-    features: [
-      'Proyectos ilimitados',
-      'Miembros ilimitados',
-      'Automatizaciones con IA',
-      '50 GB de almacenamiento',
-      '+80 integraciones',
-      'Reportes avanzados',
-      'Soporte prioritario',
-    ],
+    name: 'Pro', price: '$18',
+    periodKey: 'plan-1-period', periodDefault: 'per user / month',
+    descKey:   'plan-1-desc',   descDefault:   'For growing teams that need power and control.',
+    ctaKey:    'plan-1-cta',    ctaDefault:    'Try 14 days free',
+    featured: true,
+    features: ['Unlimited projects', 'Unlimited members', 'AI automations', '50 GB storage', '+80 integrations', 'Advanced reports', 'Priority support'],
   },
   {
-    name: 'Enterprise',
-    price: 'A medida',
-    period: 'contactar ventas',
-    description: 'Para organizaciones que requieren seguridad y compliance.',
-    cta: 'Hablar con ventas',
-    ctaHref: '#',
+    name: 'Enterprise', price: 'Custom',
+    periodKey: 'plan-2-period', periodDefault: 'contact sales',
+    descKey:   'plan-2-desc',   descDefault:   'For organizations that require security and compliance.',
+    ctaKey:    'plan-2-cta',    ctaDefault:    'Talk to sales',
     featured: false,
-    features: [
-      'Todo en Pro',
-      'SSO / SAML',
-      'Permisos granulares',
-      'SLA 99.9%',
-      'Almacenamiento ilimitado',
-      'Gerente de cuenta dedicado',
-      'Auditoría y compliance',
-    ],
+    features: ['Everything in Pro', 'SSO / SAML', 'Granular permissions', 'SLA 99.9%', 'Unlimited storage', 'Dedicated account manager'],
   },
 ];
 ---
@@ -60,27 +30,27 @@ const plans = [
 <section class="pricing section" id="pricing">
   <div class="container">
     <div class="pricing__header">
-      <span class="section__label">Precios</span>
-      <h2 class="section__title">Elige el plan que escala contigo</h2>
-      <p class="section__subtitle">Sin contratos. Cancela cuando quieras.</p>
+      <span class="section__label" data-i18n="pricing.label">Pricing</span>
+      <h2 class="section__title"  data-i18n="pricing.title">Choose the plan that scales with you</h2>
+      <p class="section__subtitle" data-i18n="pricing.subtitle">No contracts. Cancel anytime.</p>
     </div>
 
     <div class="pricing__grid">
-      {plans.map(plan => (
+      {plans.map((plan, i) => (
         <article class={`pricing-card ${plan.featured ? 'pricing-card--featured' : ''}`}>
-          {plan.featured && <span class="pricing-card__badge">Más popular</span>}
+          {plan.featured && <span class="pricing-card__badge">Most popular</span>}
 
           <div class="pricing-card__header">
             <h3 class="pricing-card__name">{plan.name}</h3>
             <div class="pricing-card__price">
               <span class="price-amount">{plan.price}</span>
-              <span class="price-period">{plan.period}</span>
+              <span class="price-period" data-i18n={plan.periodKey}>{plan.periodDefault}</span>
             </div>
-            <p class="pricing-card__desc">{plan.description}</p>
+            <p class="pricing-card__desc" data-i18n={plan.descKey}>{plan.descDefault}</p>
           </div>
 
-          <a href={plan.ctaHref} class={`btn ${plan.featured ? 'btn--primary' : 'btn--ghost'} btn--full`}>
-            {plan.cta}
+          <a href="#" class={`btn ${plan.featured ? 'btn--primary' : 'btn--ghost'} btn--full`} data-i18n={plan.ctaKey}>
+            {plan.ctaDefault}
           </a>
 
           <ul class="pricing-card__features" role="list">
@@ -100,10 +70,7 @@ const plans = [
 </section>
 
 <style>
-  .pricing__header {
-    text-align: center;
-    margin-bottom: var(--space-xl);
-  }
+  .pricing__header { text-align: center; margin-bottom: var(--space-xl); }
 
   .pricing__grid {
     display: grid;
@@ -123,7 +90,6 @@ const plans = [
     position: relative;
   }
 
-  /* El plan destacado tiene más énfasis visual */
   .pricing-card--featured {
     border-color: var(--color-primary);
     background: var(--color-surface-2);
@@ -133,8 +99,7 @@ const plans = [
 
   .pricing-card__badge {
     position: absolute;
-    top: -12px;
-    left: 50%;
+    top: -12px; left: 50%;
     transform: translateX(-50%);
     background: var(--color-primary);
     color: #fff;
@@ -145,59 +110,18 @@ const plans = [
     white-space: nowrap;
   }
 
-  .pricing-card__name {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
+  .pricing-card__name   { font-size: 1rem; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .pricing-card__price  { display: flex; align-items: baseline; gap: 0.4rem; margin-top: 0.25rem; }
+  .price-amount  { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.03em; }
+  .price-period  { font-size: 0.82rem; color: var(--color-text-muted); }
+  .pricing-card__desc { font-size: 0.88rem; color: var(--color-text-muted); }
 
-  .pricing-card__price {
-    display: flex;
-    align-items: baseline;
-    gap: 0.4rem;
-    margin-top: 0.25rem;
-  }
+  .btn--full { width: 100%; justify-content: center; }
 
-  .price-amount {
-    font-size: 2.4rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-  }
-
-  .price-period {
-    font-size: 0.82rem;
-    color: var(--color-text-muted);
-  }
-
-  .pricing-card__desc {
-    font-size: 0.88rem;
-    color: var(--color-text-muted);
-  }
-
-  .btn--full {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .pricing-card__features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-  }
-
-  .feature-item {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    font-size: 0.88rem;
-  }
+  .pricing-card__features { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+  .feature-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.88rem; }
 
   @media (max-width: 860px) {
-    .pricing-card--featured {
-      transform: none;
-    }
+    .pricing-card--featured { transform: none; }
   }
 </style>
