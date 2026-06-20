@@ -47,7 +47,7 @@ export const PRODUCTS: Product[] = [
     category: 'Pantalones',
     price: 165,
     images: [
-      'https://images.unsplash.com/photo-1594938298603-c8148c4b4f9a?w=600',
+      'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600',
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
