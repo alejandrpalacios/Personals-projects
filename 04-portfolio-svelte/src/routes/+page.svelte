@@ -1,284 +1,345 @@
 <script>
   import { lang } from '$lib/stores/lang.js';
   import { t } from '$lib/i18n/translations.js';
-  import { PROJECTS, SKILLS } from '$lib/data/projects.js';
+  import { getFeaturedProperties } from '$lib/data/properties.js';
+  import PropertyCard from '$lib/components/PropertyCard.svelte';
 
-  $: featured = PROJECTS.filter(p => p.featured);
+  const featured = getFeaturedProperties();
 </script>
 
 <svelte:head>
-  <title>AlexDev — Frontend Developer</title>
-  <meta name="description" content="Frontend developer specialized in React, Next.js, Vue and SvelteKit." />
+  <title>NidoHomes — Find your dream home</title>
+  <meta name="description" content="Exclusive properties in the best locations across Spain." />
 </svelte:head>
 
-<!-- ——— HERO ——— -->
-<section class="hero section">
-  <div class="container">
-    <p class="hero__eyebrow">
-      <span class="dot" aria-hidden="true"></span>
-      {t($lang, 'hero.available')}
-    </p>
-
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__overlay"></div>
+  <div class="container hero__content">
+    <p class="hero__eyebrow">{t($lang, 'hero.eyebrow')}</p>
     <h1 class="hero__title">
       {t($lang, 'hero.title-1')}<br />
-      <em class="hero__title--accent">{t($lang, 'hero.title-2')}</em> {t($lang, 'hero.title-3')}<br />
-      <em class="hero__title--accent">{t($lang, 'hero.title-4')}</em>.
+      <span class="hero__accent">{t($lang, 'hero.title-2')}</span>
     </h1>
+    <p class="hero__sub">{t($lang, 'hero.subtitle')}</p>
 
-    <!-- innerHTML para el <strong> en la bio -->
-    <p class="hero__bio">{@html t($lang, 'hero.bio')}</p>
-
-    <div class="hero__cta">
-      <a href="/proyectos" class="btn">{t($lang, 'hero.cta-projects')}</a>
-      <a href="/contacto" class="btn btn--outline">{t($lang, 'hero.cta-contact')}</a>
+    <div class="hero__search">
+      <input
+        type="text"
+        placeholder={t($lang, 'hero.search')}
+        class="search-input"
+        aria-label={t($lang, 'hero.search')}
+      />
+      <a href="/propiedades" class="search-btn">{t($lang, 'hero.btn')}</a>
     </div>
 
-    <div class="tech-stack" aria-label="Technologies">
-      {#each ['Astro', 'Next.js', 'Vue 3', 'SvelteKit', 'TypeScript', 'Tailwind'] as tech}
-        <span class="tech-tag">{tech}</span>
-      {/each}
+    <div class="hero__stats">
+      <div class="stat">
+        <span class="stat__num">{t($lang, 'hero.stat1-num')}</span>
+        <span class="stat__lbl">{t($lang, 'hero.stat1-lbl')}</span>
+      </div>
+      <div class="stat__divider" aria-hidden="true"></div>
+      <div class="stat">
+        <span class="stat__num">{t($lang, 'hero.stat2-num')}</span>
+        <span class="stat__lbl">{t($lang, 'hero.stat2-lbl')}</span>
+      </div>
+      <div class="stat__divider" aria-hidden="true"></div>
+      <div class="stat">
+        <span class="stat__num">{t($lang, 'hero.stat3-num')}</span>
+        <span class="stat__lbl">{t($lang, 'hero.stat3-lbl')}</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ——— PROYECTOS DESTACADOS ——— -->
-<section class="section" id="proyectos">
+<!-- FEATURED -->
+<section class="section">
   <div class="container">
     <div class="section-header">
-      <h2 class="section-title">{t($lang, 'featured.title')}</h2>
-      <a href="/proyectos" class="section-link">{t($lang, 'featured.link')}</a>
+      <div>
+        <h2 class="section-title">{t($lang, 'featured.title')}</h2>
+        <p class="section-sub">{t($lang, 'featured.sub')}</p>
+      </div>
+      <a href="/propiedades" class="section-link">{t($lang, 'featured.all')}</a>
     </div>
 
-    <div class="projects-grid">
-      {#each featured as project (project.id)}
-        <a href="/proyectos/{project.slug}" class="project-card" style="--card-color: {project.coverColor}">
-          <div class="project-card__cover">
-            <span aria-hidden="true">
-              {project.category === 'Landing Page' ? '🚀' :
-               project.category === 'E-commerce'  ? '🛍️' :
-               project.category === 'Dashboard'   ? '📊' : '✨'}
-            </span>
-          </div>
-          <div class="project-card__body">
-            <div class="project-card__meta">
-              <span class="project-category">{project.category}</span>
-              <span class="project-year">{project.year}</span>
-            </div>
-            <h3 class="project-card__title">{project.title}</h3>
-            <p class="project-card__desc">{project.description}</p>
-            <div class="project-tags">
-              {#each project.tags as tag}
-                <span class="tag">{tag}</span>
-              {/each}
-            </div>
-          </div>
-        </a>
+    <div class="cards-grid">
+      {#each featured as property (property.id)}
+        <PropertyCard {property} />
       {/each}
     </div>
   </div>
 </section>
 
-<!-- ——— SKILLS ——— -->
-<section class="section skills-section">
+<!-- TYPES -->
+<section class="types-section section">
   <div class="container">
-    <h2 class="section-title" style="margin-bottom: 2.5rem">{t($lang, 'skills.title')}</h2>
-    <div class="skills-grid">
-      {#each SKILLS as group}
-        <div class="skill-group">
-          <h3 class="skill-group__title">{group.category}</h3>
-          <ul class="skill-group__list">
-            {#each group.items as skill}
-              <li class="skill-item">{skill}</li>
-            {/each}
-          </ul>
-        </div>
-      {/each}
+    <h2 class="section-title" style="margin-bottom:2rem">{t($lang, 'types.title')}</h2>
+    <div class="types-grid">
+      <a href="/propiedades?type=casa" class="type-card">
+        <span class="type-icon" aria-hidden="true">🏡</span>
+        <h3 class="type-name">{t($lang, 'types.house')}</h3>
+        <p class="type-count">{t($lang, 'types.house-n')}</p>
+      </a>
+      <a href="/propiedades?type=apartamento" class="type-card">
+        <span class="type-icon" aria-hidden="true">🏢</span>
+        <h3 class="type-name">{t($lang, 'types.apt')}</h3>
+        <p class="type-count">{t($lang, 'types.apt-n')}</p>
+      </a>
+      <a href="/propiedades?type=local" class="type-card">
+        <span class="type-icon" aria-hidden="true">🏪</span>
+        <h3 class="type-name">{t($lang, 'types.comm')}</h3>
+        <p class="type-count">{t($lang, 'types.comm-n')}</p>
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ——— CTA FINAL ——— -->
-<section class="cta-banner section">
+<!-- CTA -->
+<section class="cta-section section">
   <div class="container">
     <div class="cta-inner">
-      <h2 class="cta-title">{t($lang, 'cta.title')}</h2>
-      <p class="cta-sub">{t($lang, 'cta.sub')}</p>
-      <a href="/contacto" class="btn">{t($lang, 'cta.btn')}</a>
+      <h2 class="cta-title">¿Quieres vender tu propiedad?</h2>
+      <p class="cta-sub">Más de 500 compradores potenciales esperan. Publica gratis hoy.</p>
+      <a href="/contacto" class="cta-btn">{t($lang, 'nav.cta')}</a>
     </div>
   </div>
 </section>
 
 <style>
+  /* HERO */
   .hero {
-    min-height: calc(100vh - var(--nav-h));
+    position: relative;
+    min-height: 600px;
     display: flex;
     align-items: center;
-    position: relative;
-    overflow: hidden;
+    background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1400&q=80');
+    background-size: cover;
+    background-position: center;
+    margin-top: calc(-1 * var(--nav-h));
+    padding-top: var(--nav-h);
   }
 
-  .hero::before {
-    content: '';
+  .hero__overlay {
     position: absolute;
-    top: -20%; right: -10%;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%);
-    pointer-events: none;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(15,23,42,0.82) 0%, rgba(29,78,216,0.55) 100%);
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    padding-block: 5rem;
+    color: #fff;
   }
 
   .hero__eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.85rem;
-    color: var(--color-muted);
-    margin-bottom: 1.5rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 1rem;
   }
-
-  .dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: #22c55e;
-    box-shadow: 0 0 6px #22c55e;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
 
   .hero__title {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 8vw, 6rem);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     line-height: 1.05;
     letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
 
-  .hero__title--accent {
-    font-style: normal;
-    -webkit-text-stroke: 1px var(--color-accent);
-    color: transparent;
-  }
+  .hero__accent { color: #fbbf24; }
 
-  .hero__bio {
-    font-size: 1.1rem;
-    color: var(--color-muted);
-    max-width: 46ch;
+  .hero__sub {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.78);
+    max-width: 44ch;
     line-height: 1.7;
     margin-bottom: 2rem;
   }
 
-  :global(.hero__bio strong) { color: var(--color-text); }
-
-  .hero__cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.75rem 1.5rem;
-    background: var(--color-accent);
-    color: #fff;
-    font-weight: 600;
-    font-size: 0.95rem;
-    border-radius: var(--radius);
-    transition: opacity var(--transition), transform var(--transition);
+  .hero__search {
+    display: flex;
+    gap: 0;
+    max-width: 520px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 2.5rem;
   }
 
-  .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-
-  .btn--outline {
-    background: transparent;
-    border: 1px solid var(--color-border);
+  .search-input {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    border: none;
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    background: #fff;
     color: var(--color-text);
   }
 
-  .btn--outline:hover { border-color: var(--color-accent); color: var(--color-accent); }
+  .search-input::placeholder { color: var(--color-muted); }
 
-  .tech-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-
-  .tech-tag {
-    padding: 0.3rem 0.8rem;
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    font-size: 0.78rem;
-    color: var(--color-muted);
+  .search-btn {
+    padding: 0.85rem 1.5rem;
+    background: var(--color-gold);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: opacity var(--transition);
   }
 
-  .section-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2rem; }
+  .search-btn:hover { opacity: 0.9; }
+
+  .hero__stats {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .stat { text-align: center; }
+
+  .stat__num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .stat__lbl {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .stat__divider {
+    width: 1px;
+    height: 32px;
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* SECTION HEADER */
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
 
   .section-title {
     font-family: var(--font-display);
     font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--color-text);
     letter-spacing: -0.02em;
   }
 
-  .section-link { font-size: 0.9rem; color: var(--color-accent); transition: opacity var(--transition); }
+  .section-sub {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+    margin-top: 0.25rem;
+  }
+
+  .section-link {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    white-space: nowrap;
+    transition: opacity var(--transition);
+    margin-top: 0.4rem;
+  }
+
   .section-link:hover { opacity: 0.75; }
 
-  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; }
+  /* CARDS */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
 
-  .project-card {
-    display: block;
+  /* TYPES */
+  .types-section { background: var(--color-surface); }
+
+  .types-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .type-card {
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
-    overflow: hidden;
-    transition: border-color var(--transition), transform var(--transition);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: border-color var(--transition), box-shadow var(--transition);
+    box-shadow: var(--shadow);
   }
 
-  .project-card:hover { border-color: var(--color-accent); transform: translateY(-2px); }
-
-  .project-card__cover {
-    height: 180px;
-    background: var(--card-color, var(--color-surface));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
+  .type-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
   }
 
-  .project-card__body { padding: 1.25rem; background: var(--color-surface); }
+  .type-icon { font-size: 2.5rem; display: block; margin-bottom: 0.75rem; }
 
-  .project-card__meta { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
+  .type-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text);
+    margin-bottom: 0.25rem;
+  }
 
-  .project-category { font-size: 0.75rem; color: var(--color-accent); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
-  .project-year { font-size: 0.75rem; color: var(--color-muted); }
-
-  .project-card__title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.01em; }
-
-  .project-card__desc {
-    font-size: 0.85rem;
+  .type-count {
+    font-size: 0.82rem;
     color: var(--color-muted);
-    line-height: 1.6;
-    margin-bottom: 1rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
 
-  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  /* CTA */
+  .cta-section { background: var(--color-accent); }
 
-  .tag {
-    padding: 0.2rem 0.6rem;
-    background: rgba(249,115,22,0.1);
-    color: var(--color-accent-2);
-    border-radius: 4px;
-    font-size: 0.72rem;
-    font-weight: 500;
+  .cta-inner {
+    text-align: center;
+    color: #fff;
   }
 
-  .skills-section { border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+  .cta-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
 
-  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; }
+  .cta-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 1.5rem;
+  }
 
-  .skill-group__title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-muted); margin-bottom: 1rem; }
+  .cta-btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: #fff;
+    color: var(--color-accent);
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-radius: var(--radius);
+    transition: opacity var(--transition);
+  }
 
-  .skill-group__list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+  .cta-btn:hover { opacity: 0.9; }
 
-  .skill-item { font-size: 0.92rem; color: var(--color-text); display: flex; align-items: center; gap: 0.5rem; }
-  .skill-item::before { content: '—'; color: var(--color-accent); font-weight: 700; }
-
-  .cta-inner { text-align: center; max-width: 600px; margin-inline: auto; }
-
-  .cta-title { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.5rem); letter-spacing: -0.02em; margin-bottom: 0.75rem; }
-  .cta-sub { color: var(--color-muted); margin-bottom: 1.5rem; font-size: 1.05rem; }
+  @media (max-width: 640px) {
+    .types-grid { grid-template-columns: 1fr; }
+    .hero__stats { gap: 1rem; }
+  }
 </style>

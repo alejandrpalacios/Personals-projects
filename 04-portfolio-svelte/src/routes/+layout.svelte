@@ -4,7 +4,6 @@
 </script>
 
 <svelte:head>
-  <!-- Fuente — se puede mover a app.html si se prefiere -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap"
@@ -14,7 +13,6 @@
 
 <Nav />
 
-<!-- Contenido de cada ruta se inyecta aquí -->
 <main>
   <slot />
 </main>
@@ -22,24 +20,24 @@
 <Footer />
 
 <style>
-  /* =============================================
-     TOKENS DE DISEÑO GLOBALES
-     ============================================= */
   :global(:root) {
-    --font-sans: 'Inter', system-ui, sans-serif;
+    --font-sans:    'Inter', system-ui, sans-serif;
     --font-display: 'Syne', sans-serif;
 
-    --color-bg:        #09090b;
-    --color-surface:   #141418;
-    --color-border:    #27272a;
-    --color-text:      #fafafa;
-    --color-muted:     #71717a;
-    --color-accent:    #f97316;      /* naranja — cambiar fácilmente al color del cliente */
-    --color-accent-2:  #fb923c;
+    --color-bg:      #f8fafc;
+    --color-surface: #ffffff;
+    --color-border:  #e2e8f0;
+    --color-text:    #0f172a;
+    --color-muted:   #64748b;
+    --color-accent:  #1d4ed8;
+    --color-accent-2:#3b82f6;
+    --color-gold:    #d97706;
 
-    --nav-h: 64px;
-    --radius: 10px;
-    --transition: 220ms ease;
+    --nav-h:    64px;
+    --radius:   10px;
+    --transition: 200ms ease;
+    --shadow:   0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md:0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
   }
 
   :global(*, *::before, *::after) {
@@ -71,7 +69,6 @@
     display: block;
   }
 
-  /* Contenedor estándar */
   :global(.container) {
     width: 100%;
     max-width: 1100px;

@@ -1,137 +1,97 @@
 <script>
-  let name = '';
-  let email = '';
-  let budget = '';
-  let message = '';
+  import { lang } from '$lib/stores/lang.js';
+  import { t } from '$lib/i18n/translations.js';
+
+  let name = '', email = '', phone = '', message = '';
   let sent = false;
 
-  // Conectar con Formspree, Resend, EmailJS, etc.
-  // El action del form debería apuntar al endpoint real
   function handleSubmit(e) {
     e.preventDefault();
-    // TODO: enviar datos a la API de tu preferencia
-    // Ejemplo con Formspree: fetch('https://formspree.io/f/TU_ID', { method: 'POST', ... })
     sent = true;
   }
 </script>
 
 <svelte:head>
-  <title>Contacto | AlexDev</title>
-  <meta name="description" content="Hablemos de tu proyecto. Respondo en menos de 24 horas." />
+  <title>Contact | NidoHomes</title>
+  <meta name="description" content="Get in touch with NidoHomes — we'll help you find your perfect property." />
 </svelte:head>
 
 <section class="section">
-  <div class="container contact-layout">
+  <div class="container">
+    <div class="contact-layout">
+      <!-- Info -->
+      <div class="contact-info">
+        <h1 class="contact-title">{t($lang, 'contact.title')}</h1>
+        <p class="contact-sub">{t($lang, 'contact.sub')}</p>
 
-    <!-- Columna izquierda — info -->
-    <div class="contact-info">
-      <h1 class="contact-title">Hablemos de<br /><em>tu proyecto</em></h1>
-      <p class="contact-subtitle">
-        ¿Tienes una idea, un sitio por construir o algo que mejorar?
-        Cuéntame — respondo en menos de 24 horas.
-      </p>
-
-      <div class="contact-details">
-        <div class="contact-item">
-          <span class="contact-icon" aria-hidden="true">📧</span>
-          <div>
-            <p class="contact-label">Email</p>
-            <!-- Reemplazar con email real -->
-            <a href="mailto:hola@alexdev.com" class="contact-value">hola@alexdev.com</a>
+        <div class="info-items">
+          <div class="info-item">
+            <span class="info-icon" aria-hidden="true">📍</span>
+            <div>
+              <p class="info-label">Office</p>
+              <p class="info-val">Calle Gran Vía 42, Madrid</p>
+            </div>
           </div>
-        </div>
-
-        <div class="contact-item">
-          <span class="contact-icon" aria-hidden="true">⏱️</span>
-          <div>
-            <p class="contact-label">Tiempo de respuesta</p>
-            <p class="contact-value">Menos de 24 horas</p>
+          <div class="info-item">
+            <span class="info-icon" aria-hidden="true">📞</span>
+            <div>
+              <p class="info-label">Phone</p>
+              <a href="tel:+34900000000" class="info-val info-link">+34 900 000 000</a>
+            </div>
           </div>
-        </div>
-
-        <div class="contact-item">
-          <span class="contact-icon" aria-hidden="true">🌍</span>
-          <div>
-            <p class="contact-label">Zona horaria</p>
-            <!-- Reemplazar con la tuya -->
-            <p class="contact-value">GMT-5 (Colombia)</p>
+          <div class="info-item">
+            <span class="info-icon" aria-hidden="true">📧</span>
+            <div>
+              <p class="info-label">Email</p>
+              <a href="mailto:hola@nidohomes.com" class="info-val info-link">hola@nidohomes.com</a>
+            </div>
+          </div>
+          <div class="info-item">
+            <span class="info-icon" aria-hidden="true">🕐</span>
+            <div>
+              <p class="info-label">Hours</p>
+              <p class="info-val">Mon–Fri: 9:00 – 19:00</p>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Redes sociales — reemplazar hrefs -->
-      <div class="social-links" aria-label="Redes sociales">
-        <a href="#" class="social-btn" aria-label="LinkedIn">LinkedIn</a>
-        <a href="#" class="social-btn" aria-label="GitHub">GitHub</a>
-        <a href="#" class="social-btn" aria-label="Twitter">Twitter / X</a>
+      <!-- Form -->
+      <div class="form-wrap">
+        {#if sent}
+          <div class="success" role="status">
+            <span class="success-icon" aria-hidden="true">🏠</span>
+            <h2>Message sent!</h2>
+            <p>{t($lang, 'contact.sent')}</p>
+            <a href="/propiedades" class="btn-back">Browse properties</a>
+          </div>
+        {:else}
+          <form on:submit={handleSubmit} class="form" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name" class="form-label">{t($lang, 'contact.name')}</label>
+                <input id="name" type="text" bind:value={name} class="form-input" required />
+              </div>
+              <div class="form-group">
+                <label for="email" class="form-label">{t($lang, 'contact.email')}</label>
+                <input id="email" type="email" bind:value={email} class="form-input" required />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone" class="form-label">{t($lang, 'contact.phone')}</label>
+              <input id="phone" type="tel" bind:value={phone} class="form-input" />
+            </div>
+
+            <div class="form-group">
+              <label for="msg" class="form-label">{t($lang, 'contact.msg')}</label>
+              <textarea id="msg" bind:value={message} class="form-input" rows="5" required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">{t($lang, 'contact.send')}</button>
+          </form>
+        {/if}
       </div>
-    </div>
-
-    <!-- Columna derecha — formulario -->
-    <div class="contact-form-wrap">
-      {#if sent}
-        <div class="success-msg" role="status">
-          <span class="success-icon" aria-hidden="true">✅</span>
-          <h2>¡Mensaje enviado!</h2>
-          <p>Te responderé pronto. Mientras tanto, echa un vistazo a mis proyectos.</p>
-          <a href="/proyectos" class="btn">Ver proyectos</a>
-        </div>
-      {:else}
-        <form class="contact-form" on:submit={handleSubmit} novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name" class="form-label">Tu nombre *</label>
-              <input
-                id="name"
-                type="text"
-                bind:value={name}
-                class="form-input"
-                placeholder="María García"
-                required
-              />
-            </div>
-
-            <div class="form-group">
-              <label for="email" class="form-label">Tu email *</label>
-              <input
-                id="email"
-                type="email"
-                bind:value={email}
-                class="form-input"
-                placeholder="maria@empresa.com"
-                required
-              />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="budget" class="form-label">Presupuesto aproximado</label>
-            <select id="budget" bind:value={budget} class="form-input">
-              <option value="">Seleccionar rango</option>
-              <option value="500-1500">$500 – $1,500</option>
-              <option value="1500-3000">$1,500 – $3,000</option>
-              <option value="3000+">$3,000+</option>
-              <option value="open">Hablemos primero</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="message" class="form-label">Cuéntame de tu proyecto *</label>
-            <textarea
-              id="message"
-              bind:value={message}
-              class="form-input"
-              rows="5"
-              placeholder="¿Qué tipo de sitio necesitas? ¿Cuándo lo necesitas? ¿Tienes referentes de diseño?"
-              required
-            ></textarea>
-          </div>
-
-          <button type="submit" class="btn submit-btn">
-            Enviar mensaje →
-          </button>
-        </form>
-      {/if}
     </div>
   </div>
 </section>
@@ -139,121 +99,73 @@
 <style>
   .contact-layout {
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
+    grid-template-columns: 1fr 1.4fr;
     gap: 4rem;
     align-items: start;
   }
 
-  /* ——— COLUMNA INFO ——— */
   .contact-title {
     font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: clamp(2rem, 4vw, 2.8rem);
     letter-spacing: -0.03em;
+    color: var(--color-text);
+    margin-bottom: 0.75rem;
     line-height: 1.1;
-    margin-bottom: 1rem;
   }
 
-  .contact-title em {
-    font-style: normal;
-    color: var(--color-accent);
-  }
-
-  .contact-subtitle {
-    color: var(--color-muted);
+  .contact-sub {
     font-size: 1rem;
+    color: var(--color-muted);
     line-height: 1.7;
     margin-bottom: 2rem;
   }
 
-  .contact-details {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-    margin-bottom: 2rem;
-  }
+  .info-items { display: flex; flex-direction: column; gap: 1.25rem; }
 
-  .contact-item {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-  }
+  .info-item { display: flex; gap: 1rem; align-items: flex-start; }
 
-  .contact-icon { font-size: 1.2rem; }
+  .info-icon { font-size: 1.2rem; margin-top: 1px; }
 
-  .contact-label {
-    font-size: 0.75rem;
+  .info-label {
+    font-size: 0.72rem;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--color-muted);
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.15rem;
   }
 
-  .contact-value {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--color-text);
-  }
+  .info-val { font-size: 0.9rem; font-weight: 500; color: var(--color-text); }
 
-  a.contact-value { transition: color var(--transition); }
-  a.contact-value:hover { color: var(--color-accent); }
+  .info-link { transition: color var(--transition); }
+  .info-link:hover { color: var(--color-accent); }
 
-  .social-links {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .social-btn {
-    padding: 0.4rem 0.9rem;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    font-size: 0.82rem;
-    color: var(--color-muted);
-    transition: border-color var(--transition), color var(--transition);
-  }
-
-  .social-btn:hover {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
-  }
-
-  /* ——— FORMULARIO ——— */
-  .contact-form-wrap {
+  /* Form */
+  .form-wrap {
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 14px;
-    padding: 2rem;
+    padding: 2.25rem;
+    box-shadow: var(--shadow);
   }
 
-  .contact-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.25rem;
-  }
+  .form { display: flex; flex-direction: column; gap: 1.1rem; }
 
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
-  .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
+  .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
 
   .form-label {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--color-muted);
   }
 
   .form-input {
-    background: var(--color-bg);
+    padding: 0.7rem 0.9rem;
     border: 1px solid var(--color-border);
     border-radius: 8px;
-    padding: 0.7rem 0.9rem;
+    background: var(--color-bg);
     color: var(--color-text);
     font-size: 0.92rem;
     font-family: inherit;
@@ -264,12 +176,9 @@
   }
 
   .form-input:focus { border-color: var(--color-accent); }
-  .form-input::placeholder { color: var(--color-muted); }
 
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.75rem 1.5rem;
+  .submit-btn {
+    padding: 0.8rem 1.5rem;
     background: var(--color-accent);
     color: #fff;
     font-weight: 600;
@@ -277,35 +186,46 @@
     border: none;
     border-radius: var(--radius);
     cursor: pointer;
-    transition: opacity var(--transition);
     font-family: inherit;
-    text-decoration: none;
+    transition: opacity var(--transition);
+    width: 100%;
   }
 
-  .btn:hover { opacity: 0.85; }
+  .submit-btn:hover { opacity: 0.88; }
 
-  .submit-btn { width: 100%; justify-content: center; }
-
-  /* ——— ÉXITO ——— */
-  .success-msg {
+  /* Success */
+  .success {
     text-align: center;
-    padding: 3rem 1rem;
+    padding: 2.5rem 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
   .success-icon { font-size: 3rem; }
 
-  .success-msg h2 {
+  .success h2 {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    color: var(--color-text);
   }
 
-  .success-msg p { color: var(--color-muted); }
+  .success p { color: var(--color-muted); font-size: 0.9rem; }
 
-  /* Responsive */
+  .btn-back {
+    margin-top: 0.25rem;
+    padding: 0.6rem 1.25rem;
+    background: var(--color-accent);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.875rem;
+    border-radius: 6px;
+    transition: opacity var(--transition);
+  }
+
+  .btn-back:hover { opacity: 0.88; }
+
   @media (max-width: 800px) {
     .contact-layout { grid-template-columns: 1fr; }
     .form-row { grid-template-columns: 1fr; }

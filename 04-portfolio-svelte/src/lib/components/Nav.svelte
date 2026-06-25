@@ -7,9 +7,9 @@
   let menuOpen = false;
 
   $: links = [
-    { key: 'nav.home',     href: '/'          },
-    { key: 'nav.projects', href: '/proyectos'  },
-    { key: 'nav.contact',  href: '/contacto'   },
+    { key: 'nav.home',       href: '/'              },
+    { key: 'nav.properties', href: '/propiedades'   },
+    { key: 'nav.contact',    href: '/contacto'      },
   ];
 
   $: if ($page.url.pathname) menuOpen = false;
@@ -17,19 +17,19 @@
 
 <nav class="nav" aria-label="Main navigation">
   <div class="container nav__inner">
-    <a href="/" class="nav__logo" aria-label="Go to home">
-      <span class="logo-dot" aria-hidden="true"></span>
-      <span>Alex<strong>Dev</strong></span>
+    <a href="/" class="nav__logo" aria-label="NidoHomes home">
+      <span class="logo-icon" aria-hidden="true">🏠</span>
+      <span>Nido<strong>Homes</strong></span>
     </a>
 
-    <!-- Links desktop -->
     <ul class="nav__links" role="list">
       {#each links as link}
         <li>
           <a
             href={link.href}
             class="nav__link"
-            class:nav__link--active={$page.url.pathname === link.href}
+            class:nav__link--active={$page.url.pathname === link.href ||
+              ($page.url.pathname.startsWith('/propiedades') && link.href === '/propiedades')}
             aria-current={$page.url.pathname === link.href ? 'page' : undefined}
           >
             {t($lang, link.key)}
@@ -39,16 +39,14 @@
     </ul>
 
     <div class="nav__right">
-      <!-- Selector de idioma -->
       <LangSelector />
       <a href="/contacto" class="btn-cta">{t($lang, 'nav.cta')}</a>
     </div>
 
-    <!-- Toggle móvil -->
     <button
       class="nav__toggle"
       on:click={() => menuOpen = !menuOpen}
-      aria-label="Open menu"
+      aria-label="Toggle menu"
       aria-expanded={menuOpen}
     >
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -68,6 +66,7 @@
       {#each links as link}
         <a href={link.href} class="nav__mobile-link">{t($lang, link.key)}</a>
       {/each}
+      <a href="/contacto" class="nav__mobile-cta">{t($lang, 'nav.cta')}</a>
     </div>
   {/if}
 </nav>
@@ -77,9 +76,10 @@
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 100;
-    background: rgba(9,9,11,0.85);
+    background: rgba(255,255,255,0.95);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-border);
+    box-shadow: var(--shadow);
   }
 
   .nav__inner {
@@ -92,17 +92,14 @@
   .nav__logo {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     font-size: 1.1rem;
     font-family: var(--font-display);
     letter-spacing: -0.02em;
+    color: var(--color-text);
   }
 
-  .logo-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--color-accent);
-  }
+  .logo-icon { font-size: 1.2rem; }
 
   .nav__links {
     list-style: none;
@@ -115,10 +112,11 @@
     font-size: 0.9rem;
     color: var(--color-muted);
     transition: color var(--transition);
+    font-weight: 500;
   }
 
   .nav__link:hover,
-  .nav__link--active { color: var(--color-text); }
+  .nav__link--active { color: var(--color-accent); }
 
   .nav__right {
     display: flex;
@@ -138,7 +136,7 @@
     white-space: nowrap;
   }
 
-  .btn-cta:hover { opacity: 0.9; }
+  .btn-cta:hover { opacity: 0.88; }
 
   .nav__toggle {
     display: none;
@@ -152,9 +150,10 @@
   .nav__mobile {
     display: flex;
     flex-direction: column;
-    background: var(--color-surface);
+    background: #fff;
     border-top: 1px solid var(--color-border);
     padding: 1rem 1.5rem;
+    gap: 0;
   }
 
   .nav__mobile-link {
@@ -162,9 +161,19 @@
     border-bottom: 1px solid var(--color-border);
     font-size: 1rem;
     color: var(--color-muted);
+    font-weight: 500;
   }
 
-  .nav__mobile-link:last-child { border-bottom: none; }
+  .nav__mobile-cta {
+    margin-top: 0.75rem;
+    padding: 0.6rem 1rem;
+    background: var(--color-accent);
+    color: #fff;
+    font-weight: 600;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
 
   @media (max-width: 700px) {
     .nav__links, .btn-cta { display: none; }
