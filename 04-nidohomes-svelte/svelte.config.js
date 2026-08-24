@@ -4,7 +4,9 @@ import adapter from '@sveltejs/adapter-vercel';
 const config = {
   kit: {
     // adapter-vercel optimiza el build específicamente para Vercel
-    adapter: adapter(),
+    // runtime fijo: evita que el adapter intente usar nodejs24.x (aún no
+    // soportado como runtime de función) solo porque el build corre con Node 24
+    adapter: adapter({ runtime: 'nodejs22.x' }),
     alias: {
       $lib: './src/lib',
     },
