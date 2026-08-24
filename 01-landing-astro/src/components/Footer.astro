@@ -1,10 +1,10 @@
 ---
 // Footer global
 const links = {
-  Producto: ['Características', 'Precios', 'Changelog', 'Roadmap'],
-  Recursos: ['Documentación', 'Blog', 'Tutoriales', 'Estado del sistema'],
-  Empresa: ['Sobre nosotros', 'Empleos', 'Prensa', 'Contacto'],
-  Legal: ['Privacidad', 'Términos', 'Cookies', 'Seguridad'],
+  Product: ['Features', 'Pricing', 'Changelog', 'Roadmap'],
+  Resources: ['Documentation', 'Blog', 'Tutorials', 'System status'],
+  Company: ['About us', 'Careers', 'Press', 'Contact'],
+  Legal: ['Privacy', 'Terms', 'Cookies', 'Security'],
 };
 ---
 
@@ -13,16 +13,12 @@ const links = {
     <div class="footer__top">
       <!-- Columna marca -->
       <div class="footer__brand">
-        <a href="/" class="logo" aria-label="TaskFlow inicio">
-          <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
-            <rect width="28" height="28" rx="8" fill="#6366f1"/>
-            <path d="M8 14l4 4 8-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        <a href={import.meta.env.BASE_URL} class="logo" aria-label="TaskFlow home">
           TaskFlow
         </a>
         <p class="footer__tagline">
-          Gestiona proyectos con claridad total.<br />
-          Hecho para equipos que entregan.
+          Manage projects with total clarity.
+          Built for teams that deliver.
         </p>
       </div>
 
@@ -44,9 +40,9 @@ const links = {
     <hr class="divider" />
 
     <div class="footer__bottom">
-      <p>&copy; {new Date().getFullYear()} TaskFlow Inc. Todos los derechos reservados.</p>
+      <p>&copy; {new Date().getFullYear()} <span>TaskFlow Inc. All rights reserved.</span></p>
       <!-- Redes sociales — reemplazar hrefs -->
-      <div class="footer__social" role="list" aria-label="Redes sociales">
+      <div class="footer__social" role="list" aria-label="Social media">
         <a href="#" aria-label="Twitter / X">𝕏</a>
         <a href="#" aria-label="LinkedIn">in</a>
         <a href="#" aria-label="GitHub">GH</a>
@@ -70,10 +66,9 @@ const links = {
   }
 
   .logo {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
     font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
   }
 
   .footer__tagline {
@@ -81,6 +76,7 @@ const links = {
     font-size: 0.88rem;
     color: var(--color-text-muted);
     line-height: 1.6;
+    white-space: pre-line;
   }
 
   .footer__col-title {

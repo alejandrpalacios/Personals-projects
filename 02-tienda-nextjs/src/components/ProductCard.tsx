@@ -1,6 +1,10 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Product } from '@/lib/types';
+import { useCart } from '@/context/CartContext';
 
 interface ProductCardProps {
   product: Product;
@@ -9,6 +13,18 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const hasDiscount = product.salePrice !== undefined;
   const displayPrice = hasDiscount ? product.salePrice! : product.price;
+  const { addItem } = useCart();
+  const [added, setAdded] = useState(false);
+
+  function handleAdd(e: React.MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (product.isSoldOut) return;
+    // Quick-add usa la primera talla/color disponibles — el detalle del producto permite elegir.
+    addItem(product, product.sizes[0], product.colors[0].name);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1500);
+  }
 
   return (
     <article className="group">
@@ -25,13 +41,13 @@ export default function ProductCard({ product }: ProductCardProps) {
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-1">
           {product.isNew && (
-            <span className="category-badge bg-white">Nuevo</span>
+            <span className="category-badge bg-white">New</span>
           )}
           {hasDiscount && (
             <span className="category-badge bg-neutral-900 text-white border-neutral-900">Sale</span>
           )}
           {product.isSoldOut && (
-            <span className="category-badge bg-neutral-200 border-neutral-300">Agotado</span>
+            <span className="category-badge bg-neutral-200 border-neutral-300">Sold out</span>
           )}
         </div>
 
@@ -40,9 +56,10 @@ export default function ProductCard({ product }: ProductCardProps) {
           <button
             className="btn-primary w-full text-xs py-2.5"
             disabled={product.isSoldOut}
-            aria-label={`Agregar ${product.name} al carrito`}
+            aria-label={`Add to cart — ${product.name}`}
+            onClick={handleAdd}
           >
-            {product.isSoldOut ? 'Agotado' : 'Agregar al carrito'}
+            {product.isSoldOut ? 'Sold out' : added ? 'Added ✓' : 'Add to cart'}
           </button>
         </div>
       </Link>
@@ -56,7 +73,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             ${product.price}
           </span>
           {hasDiscount && (
-            <span className="text-sm text-red-600 font-medium">${displayPrice}</span>
+            <span className="text-sm text-brand-600 font-medium">${displayPrice}</span>
           )}
         </div>
       </div>

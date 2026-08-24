@@ -1,13 +1,24 @@
 <script>
-  import { lang } from '$lib/stores/lang.js';
-  import { t } from '$lib/i18n/translations.js';
-
+  import { base } from '$app/paths';
   let name = '', email = '', phone = '', message = '';
   let sent = false;
+  let errors = {};
+
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function validate() {
+    const errs = {};
+    if (!name.trim()) errs.name = 'This field is required.';
+    if (!email.trim()) errs.email = 'This field is required.';
+    else if (!emailRe.test(email)) errs.email = 'Enter a valid email address.';
+    if (!message.trim()) errs.message = 'This field is required.';
+    return errs;
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
-    sent = true;
+    errors = validate();
+    if (Object.keys(errors).length === 0) sent = true;
   }
 </script>
 
@@ -21,8 +32,8 @@
     <div class="contact-layout">
       <!-- Info -->
       <div class="contact-info">
-        <h1 class="contact-title">{t($lang, 'contact.title')}</h1>
-        <p class="contact-sub">{t($lang, 'contact.sub')}</p>
+        <h1 class="contact-title">Get in touch</h1>
+        <p class="contact-sub">Our team is ready to help you find the perfect property.</p>
 
         <div class="info-items">
           <div class="info-item">
@@ -60,35 +71,54 @@
       <div class="form-wrap">
         {#if sent}
           <div class="success" role="status">
-            <span class="success-icon" aria-hidden="true">🏠</span>
+            <span class="success-icon" aria-hidden="true">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            </span>
             <h2>Message sent!</h2>
-            <p>{t($lang, 'contact.sent')}</p>
-            <a href="/propiedades" class="btn-back">Browse properties</a>
+            <p>Message sent! We'll get back to you within 24 hours.</p>
+            <a href="{base}/propiedades" class="btn-back">Browse properties</a>
           </div>
         {:else}
           <form on:submit={handleSubmit} class="form" novalidate>
             <div class="form-row">
               <div class="form-group">
-                <label for="name" class="form-label">{t($lang, 'contact.name')}</label>
-                <input id="name" type="text" bind:value={name} class="form-input" required />
+                <label for="name" class="form-label">Full name</label>
+                <input
+                  id="name" type="text" bind:value={name}
+                  class="form-input" class:form-input--error={errors.name}
+                  aria-invalid={!!errors.name}
+                />
+                {#if errors.name}<span class="field-error">{errors.name}</span>{/if}
               </div>
               <div class="form-group">
-                <label for="email" class="form-label">{t($lang, 'contact.email')}</label>
-                <input id="email" type="email" bind:value={email} class="form-input" required />
+                <label for="email" class="form-label">Email address</label>
+                <input
+                  id="email" type="email" bind:value={email}
+                  class="form-input" class:form-input--error={errors.email}
+                  aria-invalid={!!errors.email}
+                />
+                {#if errors.email}<span class="field-error">{errors.email}</span>{/if}
               </div>
             </div>
 
             <div class="form-group">
-              <label for="phone" class="form-label">{t($lang, 'contact.phone')}</label>
+              <label for="phone" class="form-label">Phone (optional)</label>
               <input id="phone" type="tel" bind:value={phone} class="form-input" />
             </div>
 
             <div class="form-group">
-              <label for="msg" class="form-label">{t($lang, 'contact.msg')}</label>
-              <textarea id="msg" bind:value={message} class="form-input" rows="5" required></textarea>
+              <label for="msg" class="form-label">Tell us what you're looking for</label>
+              <textarea
+                id="msg" bind:value={message} rows="5"
+                class="form-input" class:form-input--error={errors.message}
+                aria-invalid={!!errors.message}
+              ></textarea>
+              {#if errors.message}<span class="field-error">{errors.message}</span>{/if}
             </div>
 
-            <button type="submit" class="submit-btn">{t($lang, 'contact.send')}</button>
+            <button type="submit" class="submit-btn">Send message</button>
           </form>
         {/if}
       </div>
@@ -176,6 +206,12 @@
   }
 
   .form-input:focus { border-color: var(--color-accent); }
+  .form-input--error { border-color: #dc2626; }
+
+  .field-error {
+    font-size: 0.78rem;
+    color: #dc2626;
+  }
 
   .submit-btn {
     padding: 0.8rem 1.5rem;
@@ -203,7 +239,15 @@
     gap: 0.75rem;
   }
 
-  .success-icon { font-size: 3rem; }
+  .success-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
 
   .success h2 {
     font-family: var(--font-display);

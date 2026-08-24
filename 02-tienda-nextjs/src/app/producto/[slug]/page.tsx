@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { getProductBySlug, PRODUCTS } from '@/lib/products';
+import ProductDetailClient from './ProductDetailClient';
 
 interface Props {
   params: { slug: string };
@@ -48,7 +49,7 @@ export default function ProductPage({ params }: Props) {
             <div className="grid grid-cols-4 gap-2">
               {product.images.map((img, i) => (
                 <div key={i} className="relative aspect-square bg-neutral-100 overflow-hidden cursor-pointer">
-                  <Image src={img} alt={`${product.name} vista ${i + 1}`} fill className="object-cover" />
+                  <Image src={img} alt={`${product.name} view ${i + 1}`} fill className="object-cover" />
                 </div>
               ))}
             </div>
@@ -63,63 +64,18 @@ export default function ProductPage({ params }: Props) {
             <p className="text-2xl mt-3">${product.price}</p>
           </div>
 
-          {/* Selector de color */}
-          <fieldset>
-            <legend className="text-xs tracking-widest uppercase text-neutral-500 mb-2">
-              Color
-            </legend>
-            <div className="flex gap-2">
-              {product.colors.map(color => (
-                <label key={color.name} className="cursor-pointer" title={color.name}>
-                  <input type="radio" name="color" value={color.name} className="sr-only" />
-                  <span
-                    className="block w-8 h-8 rounded-full border-2 border-transparent hover:border-neutral-400 transition-colors"
-                    style={{ backgroundColor: color.hex, outline: '1px solid #d4d4d4' }}
-                  />
-                </label>
-              ))}
-            </div>
-          </fieldset>
-
-          {/* Selector de talla */}
-          <fieldset>
-            <div className="flex justify-between items-center mb-2">
-              <legend className="text-xs tracking-widest uppercase text-neutral-500">
-                Talla
-              </legend>
-              <button className="text-xs underline text-neutral-400 hover:text-neutral-900">
-                Guía de tallas
-              </button>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {product.sizes.map(size => (
-                <label key={size} className="cursor-pointer">
-                  <input type="radio" name="size" value={size} className="sr-only" />
-                  <span className="flex items-center justify-center w-12 h-10 border border-neutral-300 text-sm hover:border-neutral-900 transition-colors">
-                    {size}
-                  </span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-
-          {/* Agregar al carrito */}
-          <button
-            className="btn-primary w-full py-4 text-sm"
-            disabled={product.isSoldOut}
-          >
-            {product.isSoldOut ? 'Agotado' : 'Agregar al carrito'}
-          </button>
+          {/* Selector de color / talla / agregar al carrito — interactivo, en client component */}
+          <ProductDetailClient product={product} />
 
           {/* Descripción */}
           <div className="space-y-2 pt-2 border-t border-neutral-200">
             <p className="text-neutral-600 text-sm leading-relaxed">{product.description}</p>
           </div>
 
-          {/* Detalles acordeón — simplificado, se puede ampliar con Headless UI */}
+          {/* Accordion details — simplified, can be extended with Headless UI */}
           <details className="border-t border-neutral-200 pt-4">
             <summary className="text-xs tracking-widest uppercase cursor-pointer list-none flex justify-between">
-              Composición y cuidados
+              Composition & care
               <span>+</span>
             </summary>
             <ul className="mt-3 space-y-1">
@@ -131,11 +87,11 @@ export default function ProductPage({ params }: Props) {
 
           <details className="border-t border-neutral-200 pt-4">
             <summary className="text-xs tracking-widest uppercase cursor-pointer list-none flex justify-between">
-              Envíos y devoluciones
+              Shipping & returns
               <span>+</span>
             </summary>
             <p className="mt-3 text-sm text-neutral-500 leading-relaxed">
-              Envío gratuito en pedidos superiores a $150. Devoluciones gratuitas en 30 días.
+              Free shipping on orders over $150. Free returns within 30 days.
             </p>
           </details>
         </div>

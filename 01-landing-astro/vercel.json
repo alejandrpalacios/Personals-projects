@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/taskflow", "destination": "/index.html" },
+    { "source": "/taskflow/:path*", "destination": "/:path*" }
+  ]
+}

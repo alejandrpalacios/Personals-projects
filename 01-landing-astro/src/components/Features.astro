@@ -1,29 +1,38 @@
 ---
-// Los iconos permanecen igual — solo el texto cambia con data-i18n
+// Iconos de línea (estilo Feather) — sin emoji, mismo espíritu que Linear/Notion
 const features = [
-  { icon: '⚡', titleKey: 'feat-0-title', descKey: 'feat-0-desc', titleDefault: 'Real-time boards',       descDefault: 'See the status of every task instantly. No refreshing, no lost context.' },
-  { icon: '🤖', titleKey: 'feat-1-title', descKey: 'feat-1-desc', titleDefault: 'AI automations',         descDefault: 'TaskFlow learns from your workflow and suggests automations to eliminate repetitive tasks.' },
-  { icon: '🔗', titleKey: 'feat-2-title', descKey: 'feat-2-desc', titleDefault: '+80 integrations',       descDefault: 'Connect Slack, Notion, GitHub, Jira and more. Your existing stack, no migration needed.' },
-  { icon: '📊', titleKey: 'feat-3-title', descKey: 'feat-3-desc', titleDefault: 'Actionable reports',     descDefault: 'Dashboards ready to present to clients: team velocity, bottlenecks and estimates.' },
-  { icon: '🛡️', titleKey: 'feat-4-title', descKey: 'feat-4-desc', titleDefault: 'Granular permissions',   descDefault: 'Control who sees what. Per-project roles, external guests and SSO for enterprises.' },
-  { icon: '📱', titleKey: 'feat-5-title', descKey: 'feat-5-desc', titleDefault: 'Mobile native',           descDefault: 'Progressive app that works offline. Update tasks from anywhere without losing data.' },
+  { icon: 'zap',       title: 'Real-time boards',       desc: 'See the status of every task instantly. No refreshing, no lost context.' },
+  { icon: 'cpu',        title: 'AI automations',         desc: 'TaskFlow learns from your workflow and suggests automations to eliminate repetitive tasks.' },
+  { icon: 'link',       title: '+80 integrations',       desc: 'Connect Slack, Notion, GitHub, Jira and more. Your existing stack, no migration needed.' },
+  { icon: 'bar-chart',  title: 'Clear reports',          desc: 'Dashboards ready to show clients: team speed, delays and estimates.' },
+  { icon: 'shield',     title: 'Detailed permissions',   desc: 'Control who sees what. Roles per project, guest access and single sign-on for companies.' },
+  { icon: 'phone',      title: 'Mobile native',          desc: 'Progressive app that works offline. Update tasks from anywhere without losing data.' },
 ];
+
+const iconPaths: Record<string, string> = {
+  zap:       '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>',
+  cpu:       '<rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line>',
+  link:      '<path d="M15 7h3a5 5 0 0 1 5 5 5 5 0 0 1-5 5h-3m-6 0H6a5 5 0 0 1-5-5 5 5 0 0 1 5-5h3"></path><line x1="8" y1="12" x2="16" y2="12"></line>',
+  'bar-chart':'<line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line>',
+  shield:    '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>',
+  phone:     '<rect x="5" y="2" width="14" height="20" rx="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line>',
+};
 ---
 
 <section class="features section" id="features">
   <div class="container">
     <div class="features__header">
-      <span class="section__label" data-i18n="features.label">Features</span>
-      <h2 class="section__title" data-i18n="features.title">Everything your team needs, in one place</h2>
-      <p class="section__subtitle" data-i18n="features.subtitle">Designed for teams that deliver fast without sacrificing quality.</p>
+      <span class="section__label">Features</span>
+      <h2 class="section__title">Everything your team needs, in one place</h2>
+      <p class="section__subtitle">Designed for teams that deliver fast without sacrificing quality.</p>
     </div>
 
     <div class="features__grid grid-3">
       {features.map(f => (
         <article class="card feature-card">
-          <span class="feature-card__icon" aria-hidden="true">{f.icon}</span>
-          <h3 class="feature-card__title" data-i18n={f.titleKey}>{f.titleDefault}</h3>
-          <p  class="feature-card__desc"  data-i18n={f.descKey}>{f.descDefault}</p>
+          <span class="feature-card__icon" aria-hidden="true" set:html={`<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${iconPaths[f.icon]}</svg>`} />
+          <h3 class="feature-card__title">{f.title}</h3>
+          <p  class="feature-card__desc">{f.desc}</p>
         </article>
       ))}
     </div>
@@ -33,7 +42,18 @@ const features = [
 <style>
   .features__header { text-align: center; margin-bottom: var(--space-xl); }
   .feature-card { display: flex; flex-direction: column; gap: var(--space-sm); }
-  .feature-card__icon { font-size: 2rem; line-height: 1; }
-  .feature-card__title { font-size: 1.1rem; font-weight: 600; }
+
+  .feature-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--radius-sm);
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--color-primary-light);
+  }
+
+  .feature-card__title { font-size: 1.05rem; font-weight: 600; }
   .feature-card__desc  { font-size: 0.92rem; color: var(--color-text-muted); line-height: 1.65; }
 </style>

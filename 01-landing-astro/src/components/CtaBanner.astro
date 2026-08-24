@@ -1,0 +1,62 @@
+---
+---
+
+<section class="cta-banner section">
+  <div class="container">
+    <div class="cta-banner__inner">
+      <h2 class="cta-banner__title">Ready to work without chaos?</h2>
+      <p class="cta-banner__subtitle">Join thousands of teams delivering projects on time with TaskFlow.</p>
+      <div class="cta-banner__actions">
+        <a href="#pricing" class="btn btn--primary">Start free — 14 days</a>
+        <a href="#" class="btn btn--ghost">Log in</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-banner__inner {
+    position: relative;
+    text-align: center;
+    padding: var(--space-2xl) var(--space-lg);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+  }
+
+  .cta-banner__inner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 45% 60% at 50% 0%, rgba(99, 102, 241, 0.12), transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-banner__title {
+    position: relative;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    max-width: 24ch;
+    margin-inline: auto;
+  }
+
+  .cta-banner__subtitle {
+    position: relative;
+    margin-top: var(--space-sm);
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    max-width: 42ch;
+    margin-inline: auto;
+  }
+
+  .cta-banner__actions {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin-top: var(--space-lg);
+    flex-wrap: wrap;
+  }
+</style>

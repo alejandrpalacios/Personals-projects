@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/console/assets/:path*", "destination": "/assets/:path*" },
+    { "source": "/console/favicon.svg", "destination": "/favicon.svg" },
+    { "source": "/console", "destination": "/index.html" },
+    { "source": "/console/:path*", "destination": "/index.html" }
+  ]
+}

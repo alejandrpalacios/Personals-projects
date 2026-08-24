@@ -2,42 +2,43 @@
    VARIABLES DE DISEÑO DEL DASHBOARD
    ============================================= */
 :root {
-  /* Sidebar */
-  --sidebar-width: 240px;
-  --sidebar-bg: #111827;
-  --sidebar-text: #9ca3af;
-  --sidebar-text-active: #ffffff;
-  --sidebar-accent: #3b82f6;
+  /* Sidebar — clara, con borde fino en vez de bloque oscuro (Stripe/Linear) */
+  --sidebar-width: 232px;
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #6b7280;
+  --sidebar-text-active: #0a0e17;
+  --sidebar-accent: #5046e5;
+  --sidebar-hover: #f4f4f6;
 
   /* Superficies */
-  --bg-page: #f3f4f6;
+  --bg-page: #fafafa;
   --bg-card: #ffffff;
-  --bg-hover: #f9fafb;
+  --bg-hover: #f5f5f7;
 
   /* Texto */
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
-  --text-muted: #9ca3af;
+  --text-primary: #0a0e17;
+  --text-secondary: #5b616e;
+  --text-muted: #8a8f98;
 
   /* Bordes */
-  --border: #e5e7eb;
+  --border: #e7e7ea;
 
   /* Estados */
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
-  --color-info: #3b82f6;
+  --color-success: #0a8a5f;
+  --color-warning: #b25e09;
+  --color-danger: #cc3340;
+  --color-info: #5046e5;
 
   /* Tipografía */
   --font: 'Inter', system-ui, sans-serif;
 
   /* Dimensiones */
-  --header-h: 60px;
-  --radius: 8px;
+  --header-h: 58px;
+  --radius: 7px;
 
-  /* Sombras */
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  /* Sombras — sutiles, sin blur exagerado */
+  --shadow-sm: 0 1px 2px rgba(10, 14, 23, 0.05);
+  --shadow-md: 0 2px 5px rgba(10, 14, 23, 0.06), 0 8px 20px rgba(10, 14, 23, 0.04);
 }
 
 /* =============================================
@@ -126,7 +127,7 @@ img { max-width: 100%; display: block; }
 }
 
 .btn--primary  { background: var(--color-info); color: #fff; }
-.btn--primary:hover { background: #2563eb; }
+.btn--primary:hover { background: #4038c4; }
 .btn--ghost    { background: transparent; border: 1px solid var(--border); color: var(--text-secondary); }
 .btn--ghost:hover { background: var(--bg-hover); }
 

@@ -50,12 +50,12 @@
 
   /* Enlace de navegación */
   .nav-link {
-    @apply text-sm text-neutral-600 hover:text-neutral-900 tracking-wide transition-colors duration-150;
+    @apply text-sm text-neutral-600 hover:text-brand-600 tracking-wide transition-colors duration-150;
   }
 
-  /* Etiqueta de categoría / badge */
+  /* Etiqueta de categoría / badge — acento de marca sutil, no gris genérico */
   .category-badge {
-    @apply inline-block px-3 py-1 text-xs tracking-widest uppercase text-neutral-500 border border-neutral-200;
+    @apply inline-block px-3 py-1 text-xs tracking-widest uppercase text-brand-600 border border-brand-200;
   }
 
   /* Input de formulario */

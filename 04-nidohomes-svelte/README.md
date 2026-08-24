@@ -1,12 +1,13 @@
-# Portfolio Personal (SvelteKit)
+# NidoHomes — Inmobiliaria (SvelteKit)
 
-Portfolio de desarrollador frontend con SvelteKit, CSS scoped y transiciones nativas.
+Plataforma inmobiliaria con listado de propiedades, búsqueda, filtros por tipo, ficha de detalle y formulario de contacto — construida con SvelteKit y CSS scoped por componente.
 
 ## Stack
 - **SvelteKit 2** — SSG / SSR híbrido
 - **Svelte 4** — componentes con CSS encapsulado
 - **adapter-auto** — detecta Vercel / Netlify automáticamente
 - Sin dependencias de UI externas — todo CSS nativo
+- i18n propio (EN / ES / FR) vía store `lang` + diccionario plano
 
 ## Levantar localmente
 ```bash
@@ -25,22 +26,25 @@ npm run preview
 - **Netlify**: igual, adapter-auto lo maneja
 
 ## Estructura de rutas
-| Ruta | Archivo |
-|---|---|
-| `/` | `src/routes/+page.svelte` |
-| `/proyectos` | `src/routes/proyectos/+page.svelte` |
-| `/contacto` | `src/routes/contacto/+page.svelte` |
+| Ruta | Archivo | Descripción |
+|---|---|---|
+| `/` | `src/routes/+page.svelte` | Hero con buscador, propiedades destacadas, tipos, CTA |
+| `/propiedades` | `src/routes/propiedades/+page.svelte` | Listado completo con filtro por tipo y búsqueda de texto (soporta `?type=` y `?q=` en la URL) |
+| `/propiedades/[slug]` | `src/routes/propiedades/[slug]/+page.svelte` | Ficha de propiedad + formulario de contacto validado |
+| `/contacto` | `src/routes/contacto/+page.svelte` | Formulario de contacto general, validado |
 
 ## Personalizar
 | Qué cambiar | Dónde |
 |---|---|
 | Color de acento | `src/routes/+layout.svelte` → `--color-accent` |
-| Proyectos | `src/lib/data/projects.js` → array `PROJECTS` |
-| Nombre y bio | `src/routes/+page.svelte` → texto del hero |
-| Formulario de contacto | `src/routes/contacto/+page.svelte` → `handleSubmit` |
+| Propiedades | `src/lib/data/properties.js` → array `PROPERTIES` |
+| Textos e idiomas | `src/lib/i18n/translations.js` |
+| Nombre y branding | `src/lib/components/Nav.svelte`, `Footer.svelte` |
 | Fuentes | `src/routes/+layout.svelte` → `<svelte:head>` |
 
-## Conectar el formulario de contacto
+## Conectar el formulario de contacto a un backend real
+Los formularios de `/contacto` y de la ficha de propiedad ya validan campos requeridos y formato de email en el cliente; para que el envío llegue a algún lado, conecta el `handleSubmit` a un servicio:
+
 ```js
 // Opción A — Formspree (más fácil)
 fetch('https://formspree.io/f/TU_ID', {

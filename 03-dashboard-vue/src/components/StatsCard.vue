@@ -3,11 +3,14 @@
   <div class="stats-card card">
     <div class="stats-card__header">
       <span class="stats-card__label">{{ label }}</span>
-      <span class="stats-card__icon" aria-hidden="true">{{ icon }}</span>
+      <span class="stats-card__icon"><Icon :name="icon" :size="15" /></span>
     </div>
     <p class="stats-card__value">{{ value }}</p>
     <p class="stats-card__trend" :class="trendClass">
-      <span aria-hidden="true">{{ trend >= 0 ? '▲' : '▼' }}</span>
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+        <polyline v-if="trend >= 0" points="4 16 10 8 14 12 20 4" />
+        <polyline v-else points="4 8 10 16 14 12 20 20" />
+      </svg>
       {{ Math.abs(trend) }}% vs mes anterior
     </p>
   </div>
@@ -15,6 +18,7 @@
 
 <script setup>
 import { computed } from 'vue';
+import Icon from './Icon.vue';
 
 const props = defineProps({
   label: { type: String, required: true },
@@ -50,16 +54,26 @@ const trendClass = computed(() =>
 }
 
 .stats-card__icon {
-  font-size: 1.2rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: var(--bg-hover);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .stats-card__value {
-  font-size: 1.75rem;
-  font-weight: 700;
+  font-size: 1.6rem;
+  font-weight: 600;
   letter-spacing: -0.02em;
 }
 
 .stats-card__trend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-size: 12px;
   font-weight: 500;
 }

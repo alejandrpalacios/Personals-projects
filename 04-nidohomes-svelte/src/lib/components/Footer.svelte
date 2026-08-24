@@ -1,23 +1,22 @@
 <script>
-  import { lang } from '$lib/stores/lang.js';
-  import { t } from '$lib/i18n/translations.js';
+  import { base } from '$app/paths';
   const year = new Date().getFullYear();
 </script>
 
 <footer class="footer">
   <div class="container footer__inner">
     <div class="footer__brand">
-      <p class="footer__logo">🏠 NidoHomes</p>
-      <p class="footer__tagline">{t($lang, 'footer.tagline')}</p>
+      <p class="footer__logo">NidoHomes</p>
+      <p class="footer__tagline">Your trusted partner in real estate.</p>
     </div>
 
     <nav class="footer__nav" aria-label="Footer navigation">
-      <a href="/">{t($lang, 'nav.home')}</a>
-      <a href="/propiedades">{t($lang, 'nav.properties')}</a>
-      <a href="/contacto">{t($lang, 'nav.contact')}</a>
+      <a href="{base}/">Home</a>
+      <a href="{base}/propiedades">Properties</a>
+      <a href="{base}/contacto">Contact</a>
     </nav>
 
-    <p class="footer__rights">{t($lang, 'footer.rights')}</p>
+    <p class="footer__rights">© {year} NidoHomes. All rights reserved.</p>
   </div>
 </footer>
 
@@ -41,7 +40,7 @@
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 1rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.4rem;
     color: var(--color-text);
   }
 

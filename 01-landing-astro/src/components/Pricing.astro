@@ -2,27 +2,27 @@
 const plans = [
   {
     name: 'Starter', price: '$0',
-    periodKey: 'plan-0-period', periodDefault: 'forever',
-    descKey:   'plan-0-desc',   descDefault:   'For freelancers and small teams just getting started.',
-    ctaKey:    'plan-0-cta',    ctaDefault:    'Start for free',
+    period: 'forever',
+    desc:   'For freelancers and small teams just getting started.',
+    cta:    'Start for free',
     featured: false,
     features: ['Up to 3 active projects', '5 team members', 'Kanban & list boards', '2 GB storage', 'Email support'],
   },
   {
     name: 'Pro', price: '$18',
-    periodKey: 'plan-1-period', periodDefault: 'per user / month',
-    descKey:   'plan-1-desc',   descDefault:   'For growing teams that need power and control.',
-    ctaKey:    'plan-1-cta',    ctaDefault:    'Try 14 days free',
+    period: 'per user / month',
+    desc:   'For growing teams that need power and control.',
+    cta:    'Try 14 days free',
     featured: true,
     features: ['Unlimited projects', 'Unlimited members', 'AI automations', '50 GB storage', '+80 integrations', 'Advanced reports', 'Priority support'],
   },
   {
     name: 'Enterprise', price: 'Custom',
-    periodKey: 'plan-2-period', periodDefault: 'contact sales',
-    descKey:   'plan-2-desc',   descDefault:   'For organizations that require security and compliance.',
-    ctaKey:    'plan-2-cta',    ctaDefault:    'Talk to sales',
+    period: 'contact sales',
+    desc:   'For companies that need extra security.',
+    cta:    'Talk to sales',
     featured: false,
-    features: ['Everything in Pro', 'SSO / SAML', 'Granular permissions', 'SLA 99.9%', 'Unlimited storage', 'Dedicated account manager'],
+    features: ['Everything in Pro', 'Single sign-on', 'Detailed permissions', '99.9% uptime', 'Unlimited storage', 'Dedicated account manager'],
   },
 ];
 ---
@@ -30,9 +30,9 @@ const plans = [
 <section class="pricing section" id="pricing">
   <div class="container">
     <div class="pricing__header">
-      <span class="section__label" data-i18n="pricing.label">Pricing</span>
-      <h2 class="section__title"  data-i18n="pricing.title">Choose the plan that scales with you</h2>
-      <p class="section__subtitle" data-i18n="pricing.subtitle">No contracts. Cancel anytime.</p>
+      <span class="section__label">Pricing</span>
+      <h2 class="section__title">Choose the plan that scales with you</h2>
+      <p class="section__subtitle">No contracts. Cancel anytime.</p>
     </div>
 
     <div class="pricing__grid">
@@ -44,13 +44,13 @@ const plans = [
             <h3 class="pricing-card__name">{plan.name}</h3>
             <div class="pricing-card__price">
               <span class="price-amount">{plan.price}</span>
-              <span class="price-period" data-i18n={plan.periodKey}>{plan.periodDefault}</span>
+              <span class="price-period">{plan.period}</span>
             </div>
-            <p class="pricing-card__desc" data-i18n={plan.descKey}>{plan.descDefault}</p>
+            <p class="pricing-card__desc">{plan.desc}</p>
           </div>
 
-          <a href="#" class={`btn ${plan.featured ? 'btn--primary' : 'btn--ghost'} btn--full`} data-i18n={plan.ctaKey}>
-            {plan.ctaDefault}
+          <a href="#" class={`btn ${plan.featured ? 'btn--primary' : 'btn--ghost'} btn--full`}>
+            {plan.cta}
           </a>
 
           <ul class="pricing-card__features" role="list">

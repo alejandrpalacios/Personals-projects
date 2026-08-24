@@ -2,18 +2,18 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useLang } from '@/context/LangContext';
-import LangSelector from './LangSelector';
+import { useCart } from '@/context/CartContext';
+import SearchOverlay from './SearchOverlay';
 
 export default function Navbar() {
-  const { t } = useLang();
+  const { count: cartCount } = useCart();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const cartCount = 0;
+  const [searchOpen, setSearchOpen] = useState(false);
 
   const navLinks = [
-    { key: 'nav.collection'   as const, href: '/coleccion'  },
-    { key: 'nav.new-arrivals' as const, href: '/novedades'   },
-    { key: 'nav.about'        as const, href: '/nosotros'    },
+    { label: 'Collection',    href: '/coleccion'  },
+    { label: 'New arrivals',  href: '/novedades'   },
+    { label: 'About us',      href: '/nosotros'    },
   ];
 
   return (
@@ -29,21 +29,29 @@ export default function Navbar() {
           <ul className="hidden md:flex items-center gap-8">
             {navLinks.map(link => (
               <li key={link.href}>
-                <Link href={link.href} className="nav-link">{t(link.key)}</Link>
+                <Link href={link.href} className="nav-link">{link.label}</Link>
               </li>
             ))}
           </ul>
 
           <div className="flex items-center gap-3">
-            {/* Selector de idioma */}
-            <LangSelector />
-
             {/* Búsqueda */}
-            <button aria-label="Search" className="text-neutral-600 hover:text-neutral-900 transition-colors">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <circle cx="9" cy="9" r="6" stroke="currentColor" strokeWidth="1.5"/>
-                <path d="M13.5 13.5l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
+            <button
+              aria-label="Search"
+              aria-expanded={searchOpen}
+              onClick={() => setSearchOpen(o => !o)}
+              className="text-neutral-600 hover:text-neutral-900 transition-colors"
+            >
+              {searchOpen ? (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <circle cx="9" cy="9" r="6" stroke="currentColor" strokeWidth="1.5"/>
+                  <path d="M13.5 13.5l3 3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+              )}
             </button>
 
             {/* Carrito */}
@@ -83,13 +91,15 @@ export default function Navbar() {
             {navLinks.map(link => (
               <li key={link.href}>
                 <Link href={link.href} className="nav-link block py-1" onClick={() => setMobileOpen(false)}>
-                  {t(link.key)}
+                  {link.label}
                 </Link>
               </li>
             ))}
           </ul>
         </div>
       )}
+
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
 }

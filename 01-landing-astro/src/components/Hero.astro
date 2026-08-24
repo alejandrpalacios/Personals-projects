@@ -6,37 +6,61 @@
     <div class="hero__announce">
       <span class="badge">
         <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="6"/></svg>
-        <span data-i18n="hero.badge">New — AI integration available</span>
+        <span>New — AI integration available</span>
       </span>
     </div>
 
     <h1 class="hero__title">
-      <span data-i18n="hero.title-1">Manage projects with</span><br />
-      <span class="hero__title--accent" data-i18n="hero.title-2">total clarity</span>
+      <span>Manage projects with</span><br />
+      <span class="hero__title--accent">total clarity</span>
     </h1>
 
-    <p class="hero__subtitle" data-i18n="hero.subtitle">
+    <p class="hero__subtitle">
       TaskFlow centralizes your team, automates task tracking, and gives you real-time visibility to deliver projects without chaos.
     </p>
 
     <div class="hero__cta">
       <a href="#pricing" class="btn btn--primary">
-        <span data-i18n="hero.cta-1">Start free — 14 days</span>
+        <span>Start free — 14 days</span>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
-      <a href="#how-it-works" class="btn btn--ghost" data-i18n="hero.cta-2">Watch demo</a>
+      <a href="#how-it-works" class="btn btn--ghost">Watch demo</a>
     </div>
 
-    <!-- data-i18n-html porque contiene <strong> -->
-    <p class="hero__social-proof" data-i18n-html="hero.proof">
+    <p class="hero__social-proof">
       More than <strong>2,400 teams</strong> already trust TaskFlow — no credit card required
     </p>
 
     <div class="hero__preview" aria-label="TaskFlow dashboard preview">
       <div class="hero__preview-inner">
-        <div class="preview-placeholder">
-          <span>[ Product screenshot ]</span>
-          <p>Replace with real image — recommended: 1200×700 px</p>
+        <div class="mock-app" aria-hidden="true">
+          <div class="mock-app__topbar">
+            <span class="mock-dot mock-dot--red"></span>
+            <span class="mock-dot mock-dot--yellow"></span>
+            <span class="mock-dot mock-dot--green"></span>
+            <span class="mock-app__title">TaskFlow — Sprint 24</span>
+          </div>
+          <div class="mock-board">
+            <div class="mock-col">
+              <div class="mock-col__head"><span>To do</span><span class="mock-count">4</span></div>
+              <div class="mock-card"><span class="mock-tag mock-tag--purple">Design</span>Update onboarding flow</div>
+              <div class="mock-card"><span class="mock-tag mock-tag--blue">Bug</span>Fix invoice export</div>
+              <div class="mock-card"><span class="mock-tag mock-tag--purple">Design</span>New pricing page</div>
+            </div>
+            <div class="mock-col">
+              <div class="mock-col__head"><span>In progress</span><span class="mock-count">3</span></div>
+              <div class="mock-card mock-card--active">
+                <span class="mock-tag mock-tag--green">Feature</span>AI task suggestions
+                <div class="mock-progress"><span></span></div>
+              </div>
+              <div class="mock-card"><span class="mock-tag mock-tag--blue">Bug</span>Slack sync delay</div>
+            </div>
+            <div class="mock-col">
+              <div class="mock-col__head"><span>Done</span><span class="mock-count">8</span></div>
+              <div class="mock-card mock-card--done">✓ Q3 roadmap review</div>
+              <div class="mock-card mock-card--done">✓ Team onboarding v2</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -55,7 +79,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(99, 102, 241, 0.18), transparent 70%);
+    background: radial-gradient(ellipse 50% 35% at 50% -5%, rgba(99, 102, 241, 0.09), transparent 70%);
     pointer-events: none;
   }
 
@@ -117,19 +141,119 @@
     background: linear-gradient(90deg, transparent, rgba(99,102,241,0.5), transparent);
   }
 
-  .hero__preview-inner { padding: var(--space-lg); min-height: 400px; display: grid; place-items: center; }
+  .hero__preview-inner { padding: var(--space-lg); }
 
-  .preview-placeholder {
-    color: var(--color-text-muted);
-    text-align: center;
-    border: 2px dashed var(--color-border);
+  /* Mockup del producto — sustituye al screenshot real */
+  .mock-app {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
-    padding: var(--space-xl);
-    width: 100%;
+    overflow: hidden;
+    text-align: left;
   }
 
-  .preview-placeholder span { display: block; font-size: 1.2rem; margin-bottom: var(--space-xs); }
-  .preview-placeholder p    { font-size: 0.8rem; opacity: 0.6; }
+  .mock-app__topbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .mock-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .mock-dot--red    { background: #f87171; }
+  .mock-dot--yellow { background: #fbbf24; }
+  .mock-dot--green  { background: #34d399; }
+
+  .mock-app__title {
+    margin-left: 0.6rem;
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .mock-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--color-border);
+  }
+
+  .mock-col {
+    background: var(--color-surface);
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    min-height: 260px;
+  }
+
+  .mock-col__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    margin-bottom: 0.2rem;
+  }
+
+  .mock-count {
+    background: var(--color-surface-2);
+    border-radius: 999px;
+    padding: 0.05rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .mock-card {
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    padding: 0.6rem 0.7rem;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--color-text);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .mock-card--active { border-color: rgba(99, 102, 241, 0.4); }
+  .mock-card--done   { color: var(--color-text-muted); text-decoration: line-through; opacity: 0.7; }
+
+  .mock-tag {
+    align-self: flex-start;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 0.12rem 0.45rem;
+    border-radius: 4px;
+  }
+
+  .mock-tag--purple { background: rgba(167, 139, 250, 0.18); color: #c4b5fd; }
+  .mock-tag--blue   { background: rgba(96, 165, 250, 0.18); color: #93c5fd; }
+  .mock-tag--green  { background: rgba(52, 211, 153, 0.18); color: #6ee7b7; }
+
+  .mock-progress {
+    height: 4px;
+    border-radius: 999px;
+    background: var(--color-border);
+    overflow: hidden;
+  }
+
+  .mock-progress span {
+    display: block;
+    width: 65%;
+    height: 100%;
+    background: var(--color-primary);
+  }
+
+  @media (max-width: 720px) {
+    .mock-board { grid-template-columns: 1fr; }
+    .mock-col { min-height: auto; }
+  }
 
   @media (max-width: 600px) {
     .hero__cta { flex-direction: column; align-items: center; }

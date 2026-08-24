@@ -1,30 +1,23 @@
 ---
-import LangSelector from './LangSelector.astro';
 ---
 
 <header class="header" id="header">
   <div class="container">
     <nav class="nav">
-      <a href="/" class="logo" aria-label="TaskFlow home">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-          <rect width="28" height="28" rx="8" fill="#6366f1"/>
-          <path d="M8 14l4 4 8-8" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+      <a href={import.meta.env.BASE_URL} class="logo" aria-label="TaskFlow home">
         <span>TaskFlow</span>
       </a>
 
       <ul class="nav__links" role="list">
-        <li><a href="#features"      class="nav__link" data-i18n="nav.features">Features</a></li>
-        <li><a href="#how-it-works"  class="nav__link" data-i18n="nav.how-it-works">How it works</a></li>
-        <li><a href="#pricing"       class="nav__link" data-i18n="nav.pricing">Pricing</a></li>
-        <li><a href="#testimonials"  class="nav__link" data-i18n="nav.testimonials">Testimonials</a></li>
+        <li><a href="#features"      class="nav__link">Features</a></li>
+        <li><a href="#how-it-works"  class="nav__link">How it works</a></li>
+        <li><a href="#pricing"       class="nav__link">Pricing</a></li>
+        <li><a href="#testimonials"  class="nav__link">Testimonials</a></li>
       </ul>
 
       <div class="nav__actions">
-        <!-- Selector de idioma -->
-        <LangSelector />
-        <a href="#" class="btn btn--ghost btn--sm" data-i18n="nav.login">Log in</a>
-        <a href="#pricing" class="btn btn--primary btn--sm" data-i18n="nav.start">Get started free</a>
+        <a href="#" class="btn btn--ghost btn--sm">Log in</a>
+        <a href="#pricing" class="btn btn--primary btn--sm">Get started free</a>
       </div>
 
       <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
@@ -58,9 +51,9 @@ import LangSelector from './LangSelector.astro';
   .logo {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
   }
 
   .nav__links {

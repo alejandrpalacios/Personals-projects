@@ -24,20 +24,20 @@
     --font-sans:    'Inter', system-ui, sans-serif;
     --font-display: 'Syne', sans-serif;
 
-    --color-bg:      #f8fafc;
+    --color-bg:      #f7f7f5;
     --color-surface: #ffffff;
-    --color-border:  #e2e8f0;
-    --color-text:    #0f172a;
-    --color-muted:   #64748b;
-    --color-accent:  #1d4ed8;
-    --color-accent-2:#3b82f6;
-    --color-gold:    #d97706;
+    --color-border:  #e4e4df;
+    --color-text:    #1c1c1a;
+    --color-muted:   #67675f;
+    --color-accent:  #0f6d5f;
+    --color-accent-2:#12a394;
+    --color-gold:    #b8860b;
 
     --nav-h:    64px;
-    --radius:   10px;
-    --transition: 200ms ease;
-    --shadow:   0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
-    --shadow-md:0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+    --radius:   8px;
+    --transition: 160ms ease;
+    --shadow:   0 1px 2px rgba(20,20,15,0.06);
+    --shadow-md:0 2px 8px rgba(20,20,15,0.08), 0 1px 2px rgba(20,20,15,0.04);
   }
 
   :global(*, *::before, *::after) {
@@ -78,6 +78,16 @@
 
   :global(.section) {
     padding-block: 5rem;
+  }
+
+  :global(.sr-only) {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
   }
 
   main {

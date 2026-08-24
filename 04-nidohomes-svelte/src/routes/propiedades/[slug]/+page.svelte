@@ -1,17 +1,31 @@
 <script>
   import { page } from '$app/stores';
-  import { lang } from '$lib/stores/lang.js';
-  import { t } from '$lib/i18n/translations.js';
+  import { base } from '$app/paths';
   import { getPropertyBySlug, formatPrice } from '$lib/data/properties.js';
+  import { savedProperties } from '$lib/stores/saved.js';
+  import PropertyMap from '$lib/components/PropertyMap.svelte';
 
   $: property = getPropertyBySlug($page.params.slug);
+  $: saved = property ? $savedProperties.includes(property.id) : false;
 
   let sent = false;
   let name = '', email = '', message = '';
+  let errors = {};
+
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function validate() {
+    const errs = {};
+    if (!name.trim()) errs.name = 'This field is required.';
+    if (!email.trim()) errs.email = 'This field is required.';
+    else if (!emailRe.test(email)) errs.email = 'Enter a valid email address.';
+    return errs;
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
-    sent = true;
+    errors = validate();
+    if (Object.keys(errors).length === 0) sent = true;
   }
 </script>
 
@@ -22,7 +36,20 @@
 <section class="section">
   <div class="container">
     {#if property}
-      <a href="/propiedades" class="back-link">{t($lang, 'detail.back')}</a>
+      <div class="detail-topbar">
+        <a href="{base}/propiedades" class="back-link">← Back to properties</a>
+        <button
+          class="save-btn"
+          class:save-btn--active={saved}
+          aria-pressed={saved}
+          on:click={() => savedProperties.toggle(property.id)}
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill={saved ? 'currentColor' : 'none'} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+          </svg>
+          {saved ? 'Saved' : 'Save property'}
+        </button>
+      </div>
 
       <div class="detail-layout">
         <!-- Left: Image + Info -->
@@ -30,7 +57,7 @@
           <div class="detail-img-wrap">
             <img src={property.image} alt={property.title} width="700" height="460" />
             {#if property.isNew}
-              <span class="badge-new">{t($lang, 'card.new')}</span>
+              <span class="badge-new">New</span>
             {/if}
           </div>
 
@@ -52,11 +79,11 @@
             <div class="detail-stats">
               <div class="detail-stat">
                 <span class="stat-val">{property.rooms}</span>
-                <span class="stat-lbl">{t($lang, 'card.rooms')}</span>
+                <span class="stat-lbl">rooms</span>
               </div>
               <div class="detail-stat">
                 <span class="stat-val">{property.baths}</span>
-                <span class="stat-lbl">{t($lang, 'card.baths')}</span>
+                <span class="stat-lbl">baths</span>
               </div>
               <div class="detail-stat">
                 <span class="stat-val">{property.area}</span>
@@ -65,12 +92,12 @@
             </div>
 
             <div class="detail-section">
-              <h2 class="detail-section-title">{t($lang, 'detail.desc')}</h2>
+              <h2 class="detail-section-title">Description</h2>
               <p class="detail-desc">{property.description}</p>
             </div>
 
             <div class="detail-section">
-              <h2 class="detail-section-title">{t($lang, 'detail.features')}</h2>
+              <h2 class="detail-section-title">Features</h2>
               <ul class="features-list">
                 {#each property.features as feat}
                   <li class="feature-item">
@@ -80,35 +107,58 @@
                 {/each}
               </ul>
             </div>
+
+            <div class="detail-section">
+              <h2 class="detail-section-title">Location</h2>
+              {#if property.lat && property.lon}
+                <PropertyMap lat={property.lat} lon={property.lon} />
+              {:else}
+                <p class="detail-desc">{property.location}</p>
+              {/if}
+            </div>
           </div>
         </div>
 
         <!-- Right: Contact form -->
         <aside class="detail-aside">
           <div class="contact-card">
-            <h2 class="contact-card-title">{t($lang, 'detail.contact')}</h2>
-            <p class="contact-card-sub">{t($lang, 'detail.visit')}</p>
+            <h2 class="contact-card-title">Interested in this property?</h2>
+            <p class="contact-card-sub">Request a visit</p>
 
             {#if sent}
               <div class="success-msg" role="status">
-                <span aria-hidden="true">✅</span>
-                <p>{t($lang, 'contact.sent')}</p>
+                <span class="success-msg__icon" aria-hidden="true">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                </span>
+                <p>Message sent! We'll get back to you within 24 hours.</p>
               </div>
             {:else}
               <form on:submit={handleSubmit} class="contact-form" novalidate>
                 <div class="form-group">
-                  <label for="name" class="form-label">{t($lang, 'contact.name')}</label>
-                  <input id="name" type="text" bind:value={name} class="form-input" required />
+                  <label for="name" class="form-label">Full name</label>
+                  <input
+                    id="name" type="text" bind:value={name}
+                    class="form-input" class:form-input--error={errors.name}
+                    aria-invalid={!!errors.name}
+                  />
+                  {#if errors.name}<span class="field-error">{errors.name}</span>{/if}
                 </div>
                 <div class="form-group">
-                  <label for="email" class="form-label">{t($lang, 'contact.email')}</label>
-                  <input id="email" type="email" bind:value={email} class="form-input" required />
+                  <label for="email" class="form-label">Email address</label>
+                  <input
+                    id="email" type="email" bind:value={email}
+                    class="form-input" class:form-input--error={errors.email}
+                    aria-invalid={!!errors.email}
+                  />
+                  {#if errors.email}<span class="field-error">{errors.email}</span>{/if}
                 </div>
                 <div class="form-group">
-                  <label for="msg" class="form-label">{t($lang, 'contact.msg')}</label>
+                  <label for="msg" class="form-label">Tell us what you're looking for</label>
                   <textarea id="msg" bind:value={message} class="form-input" rows="4"></textarea>
                 </div>
-                <button type="submit" class="submit-btn">{t($lang, 'detail.visit')}</button>
+                <button type="submit" class="submit-btn">Request a visit</button>
               </form>
             {/if}
           </div>
@@ -118,21 +168,47 @@
     {:else}
       <div class="not-found">
         <h1>Property not found</h1>
-        <a href="/propiedades" class="back-link">{t($lang, 'detail.back')}</a>
+        <a href="{base}/propiedades" class="back-link">← Back to properties</a>
       </div>
     {/if}
   </div>
 </section>
 
 <style>
+  .detail-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+  }
+
   .back-link {
     display: inline-block;
     font-size: 0.875rem;
     font-weight: 500;
     color: var(--color-muted);
-    margin-bottom: 1.5rem;
     transition: color var(--transition);
   }
+
+  .save-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.9rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-surface);
+    color: var(--color-text);
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color var(--transition), color var(--transition);
+  }
+
+  .save-btn:hover { border-color: #e11d48; }
+  .save-btn--active { color: #e11d48; border-color: #e11d48; }
 
   .back-link:hover { color: var(--color-accent); }
 
@@ -317,6 +393,12 @@
   }
 
   .form-input:focus { border-color: var(--color-accent); }
+  .form-input--error { border-color: #dc2626; }
+
+  .field-error {
+    font-size: 0.76rem;
+    color: #dc2626;
+  }
 
   .submit-btn {
     padding: 0.75rem;
@@ -345,7 +427,15 @@
     align-items: center;
   }
 
-  .success-msg span { font-size: 2rem; }
+  .success-msg__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
 
   .not-found { text-align: center; padding: 4rem 0; }
 

@@ -1,4 +1,4 @@
-# AdminPro — Dashboard (Vue 3 + Vite)
+# Console — Dashboard (Vue 3 + Vite)
 
 Panel de administración con Vue 3 Composition API, Vue Router y Vite.
 

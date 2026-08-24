@@ -1,52 +1,68 @@
 <script>
-  import { lang } from '$lib/stores/lang.js';
-  import { t } from '$lib/i18n/translations.js';
+  import { base } from '$app/paths';
   import { formatPrice } from '$lib/data/properties.js';
+  import { savedProperties } from '$lib/stores/saved.js';
 
   export let property;
+
+  $: saved = $savedProperties.includes(property.id);
 </script>
 
-<a href="/propiedades/{property.slug}" class="card">
-  <div class="card__img-wrap">
-    <img
-      src={property.image}
-      alt={property.title}
-      loading="lazy"
-      width="400"
-      height="260"
-    />
-    {#if property.isNew}
-      <span class="badge badge--new">{t($lang, 'card.new')}</span>
-    {/if}
-    <span class="badge badge--type">{property.type}</span>
-  </div>
+<div class="card">
+  <button
+    class="card__save"
+    class:card__save--active={saved}
+    aria-label={saved ? 'Remove from saved' : 'Save property'}
+    aria-pressed={saved}
+    on:click={() => savedProperties.toggle(property.id)}
+  >
+    <svg width="16" height="16" viewBox="0 0 24 24" fill={saved ? 'currentColor' : 'none'} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+    </svg>
+  </button>
 
-  <div class="card__body">
-    <p class="card__price">{formatPrice(property.price)}</p>
-    <h3 class="card__title">{property.title}</h3>
-    <p class="card__location">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-        <circle cx="12" cy="10" r="3"/>
-      </svg>
-      {property.location}
-    </p>
-
-    <div class="card__stats">
-      <span>{property.rooms} {t($lang, 'card.rooms')}</span>
-      <span class="sep" aria-hidden="true">·</span>
-      <span>{property.baths} {t($lang, 'card.baths')}</span>
-      <span class="sep" aria-hidden="true">·</span>
-      <span>{property.area} m²</span>
+  <a href="{base}/propiedades/{property.slug}" class="card__link">
+    <div class="card__img-wrap">
+      <img
+        src={property.image}
+        alt={property.title}
+        loading="lazy"
+        width="400"
+        height="260"
+      />
+      {#if property.isNew}
+        <span class="badge badge--new">New</span>
+      {/if}
+      <span class="badge badge--type">{property.type}</span>
     </div>
 
-    <span class="card__cta">{t($lang, 'card.view')}</span>
-  </div>
-</a>
+    <div class="card__body">
+      <p class="card__price">{formatPrice(property.price)}</p>
+      <h3 class="card__title">{property.title}</h3>
+      <p class="card__location">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        {property.location}
+      </p>
+
+      <div class="card__stats">
+        <span>{property.rooms} rooms</span>
+        <span class="sep" aria-hidden="true">·</span>
+        <span>{property.baths} baths</span>
+        <span class="sep" aria-hidden="true">·</span>
+        <span>{property.area} m²</span>
+      </div>
+
+      <span class="card__cta">View details →</span>
+    </div>
+  </a>
+</div>
 
 <style>
   .card {
-    display: block;
+    position: relative;
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius);
@@ -59,6 +75,28 @@
     box-shadow: var(--shadow-md);
     transform: translateY(-3px);
   }
+
+  .card__link { display: block; }
+
+  .card__save {
+    position: absolute;
+    top: 12px; right: 12px;
+    z-index: 2;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.92);
+    border: none;
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform var(--transition), color var(--transition);
+    box-shadow: var(--shadow);
+  }
+
+  .card__save:hover { transform: scale(1.08); }
+  .card__save--active { color: #e11d48; }
 
   .card__img-wrap {
     position: relative;
@@ -93,6 +131,7 @@
   }
 
   .badge--type {
+    top: 50px;
     right: 12px;
     background: rgba(255,255,255,0.92);
     color: var(--color-text);

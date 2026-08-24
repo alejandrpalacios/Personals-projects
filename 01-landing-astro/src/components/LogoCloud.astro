@@ -1,0 +1,59 @@
+---
+// Franja de "clientes" — nombres de marca inventados, sin logos reales de terceros.
+const logos = ['Novaworks', 'Brightline', 'Cursive', 'Fenwick & Co', 'Alto Labs', 'Meridian'];
+---
+
+<section class="logo-cloud">
+  <div class="container">
+    <p class="logo-cloud__label">Trusted by teams at</p>
+    <ul class="logo-cloud__row" role="list">
+      {logos.map(name => (
+        <li class="logo-cloud__item" aria-hidden="true">{name}</li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .logo-cloud {
+    padding-block: var(--space-lg);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .logo-cloud__label {
+    text-align: center;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-md);
+  }
+
+  .logo-cloud__row {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-lg);
+  }
+
+  .logo-cloud__item {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    opacity: 0.55;
+    letter-spacing: -0.01em;
+    transition: opacity var(--transition);
+  }
+
+  .logo-cloud__item:hover { opacity: 0.9; }
+
+  @media (max-width: 600px) {
+    .logo-cloud__row { gap: var(--space-md); }
+    .logo-cloud__item { font-size: 0.9rem; }
+  }
+</style>

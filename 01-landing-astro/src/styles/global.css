@@ -17,7 +17,7 @@
 
   /* Tipografía */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-mono: 'Fira Code', monospace;
 
   /* Espaciado base */
   --space-xs: 0.5rem;
@@ -27,14 +27,14 @@
   --space-xl: 4rem;
   --space-2xl: 6rem;
 
-  /* Radio */
+  /* Radio — más pequeño y confiado, sin bordes tan redondeados */
   --radius-sm: 6px;
-  --radius-md: 12px;
-  --radius-lg: 20px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
 
-  /* Sombras */
-  --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.15);
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
+  /* Sombras — sutiles, sin glow morado grande */
+  --shadow-glow: 0 0 1px rgba(99, 102, 241, 0.4), 0 0 24px rgba(99, 102, 241, 0.06);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
 
   /* Transiciones */
   --transition: 200ms ease;

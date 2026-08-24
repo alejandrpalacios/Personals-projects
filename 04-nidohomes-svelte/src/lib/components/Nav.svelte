@@ -1,15 +1,14 @@
 <script>
   import { page } from '$app/stores';
-  import { lang } from '$lib/stores/lang.js';
-  import { t } from '$lib/i18n/translations.js';
-  import LangSelector from './LangSelector.svelte';
+  import { base } from '$app/paths';
+  import { savedProperties } from '$lib/stores/saved.js';
 
   let menuOpen = false;
 
-  $: links = [
-    { key: 'nav.home',       href: '/'              },
-    { key: 'nav.properties', href: '/propiedades'   },
-    { key: 'nav.contact',    href: '/contacto'      },
+  const links = [
+    { label: 'Home',       href: `${base}/`              },
+    { label: 'Properties', href: `${base}/propiedades`   },
+    { label: 'Contact',    href: `${base}/contacto`      },
   ];
 
   $: if ($page.url.pathname) menuOpen = false;
@@ -17,8 +16,7 @@
 
 <nav class="nav" aria-label="Main navigation">
   <div class="container nav__inner">
-    <a href="/" class="nav__logo" aria-label="NidoHomes home">
-      <span class="logo-icon" aria-hidden="true">🏠</span>
+    <a href="{base}/" class="nav__logo" aria-label="NidoHomes home">
       <span>Nido<strong>Homes</strong></span>
     </a>
 
@@ -29,18 +27,25 @@
             href={link.href}
             class="nav__link"
             class:nav__link--active={$page.url.pathname === link.href ||
-              ($page.url.pathname.startsWith('/propiedades') && link.href === '/propiedades')}
+              ($page.url.pathname.startsWith(`${base}/propiedades`) && link.href === `${base}/propiedades`)}
             aria-current={$page.url.pathname === link.href ? 'page' : undefined}
           >
-            {t($lang, link.key)}
+            {link.label}
           </a>
         </li>
       {/each}
     </ul>
 
     <div class="nav__right">
-      <LangSelector />
-      <a href="/contacto" class="btn-cta">{t($lang, 'nav.cta')}</a>
+      <a href="{base}/propiedades?saved=1" class="nav__saved" aria-label="Saved properties">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill={$savedProperties.length ? 'currentColor' : 'none'} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+        </svg>
+        {#if $savedProperties.length}
+          <span class="nav__saved-count">{$savedProperties.length}</span>
+        {/if}
+      </a>
+      <a href="{base}/contacto" class="btn-cta">List property</a>
     </div>
 
     <button
@@ -64,9 +69,12 @@
   {#if menuOpen}
     <div class="nav__mobile">
       {#each links as link}
-        <a href={link.href} class="nav__mobile-link">{t($lang, link.key)}</a>
+        <a href={link.href} class="nav__mobile-link">{link.label}</a>
       {/each}
-      <a href="/contacto" class="nav__mobile-cta">{t($lang, 'nav.cta')}</a>
+      <a href="{base}/propiedades?saved=1" class="nav__mobile-link">
+        Saved properties{$savedProperties.length ? ` (${$savedProperties.length})` : ''}
+      </a>
+      <a href="{base}/contacto" class="nav__mobile-cta">List property</a>
     </div>
   {/if}
 </nav>
@@ -90,16 +98,11 @@
   }
 
   .nav__logo {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-family: var(--font-display);
     letter-spacing: -0.02em;
     color: var(--color-text);
   }
-
-  .logo-icon { font-size: 1.2rem; }
 
   .nav__links {
     list-style: none;
@@ -122,6 +125,30 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
+  }
+
+  .nav__saved {
+    position: relative;
+    display: flex;
+    color: var(--color-muted);
+    transition: color var(--transition);
+  }
+
+  .nav__saved:hover { color: #e11d48; }
+
+  .nav__saved-count {
+    position: absolute;
+    top: -6px; right: -8px;
+    min-width: 15px; height: 15px;
+    padding-inline: 2px;
+    border-radius: 999px;
+    background: #e11d48;
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .btn-cta {

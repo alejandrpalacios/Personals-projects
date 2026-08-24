@@ -1,81 +1,157 @@
 import { Product } from './types';
 
-// Datos de ejemplo — reemplazar con llamada a API / CMS (Shopify, Sanity, etc.)
+// Sample data — replace with an API / CMS call (Shopify, Sanity, etc.)
 export const PRODUCTS: Product[] = [
   {
     id: '1',
     slug: 'vestido-lino-arena',
-    name: 'Vestido Lino Arena',
-    category: 'Vestidos',
+    name: 'Sand Linen Dress',
+    category: 'Dresses',
     price: 189,
     images: [
       'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600',
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
-      { name: 'Arena', hex: '#d4b896' },
-      { name: 'Blanco', hex: '#f5f0ea' },
+      { name: 'Sand', hex: '#d4b896' },
+      { name: 'White', hex: '#f5f0ea' },
     ],
     description:
-      'Vestido de lino 100% de corte recto y largo midi. Fresco, versátil y atemporal.',
-    details: ['100% Lino', 'Hecho en Portugal', 'Lavable a mano', 'Fit recto'],
+      '100% linen dress with a straight cut and midi length. Fresh, versatile and timeless.',
+    details: ['100% Linen', 'Made in Portugal', 'Hand wash', 'Straight fit'],
     isNew: true,
   },
   {
     id: '2',
     slug: 'blazer-crudo-oversize',
-    name: 'Blazer Crudo Oversize',
-    category: 'Chaquetas',
+    name: 'Oversized Raw Blazer',
+    category: 'Jackets',
     price: 245,
     images: [
       'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600',
     ],
     sizes: ['S', 'M', 'L'],
     colors: [
-      { name: 'Crudo', hex: '#f0e8d8' },
-      { name: 'Negro', hex: '#1a1a1a' },
+      { name: 'Raw', hex: '#f0e8d8' },
+      { name: 'Black', hex: '#1a1a1a' },
     ],
     description:
-      'Blazer oversize de punto con hombros caídos. La pieza estructurante de tu guardarropa cápsula.',
-    details: ['70% Lana / 30% Cachemira', 'Hecho en Italia', 'Dry clean'],
+      'Oversized knit blazer with dropped shoulders. A key piece you can wear with almost anything.',
+    details: ['70% Wool / 30% Cashmere', 'Made in Italy', 'Dry clean'],
     isNew: false,
   },
   {
     id: '3',
     slug: 'pantalon-sastre-negro',
-    name: 'Pantalón Sastre Negro',
-    category: 'Pantalones',
+    name: 'Black Tailored Trousers',
+    category: 'Trousers',
     price: 165,
     images: [
       'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600',
     ],
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     colors: [
-      { name: 'Negro', hex: '#0d0d0d' },
-      { name: 'Gris marengo', hex: '#4a4a52' },
+      { name: 'Black', hex: '#0d0d0d' },
+      { name: 'Charcoal', hex: '#4a4a52' },
     ],
     description:
-      'Pantalón de pinzas de corte recto con caída perfecta. Formal sin esfuerzo.',
-    details: ['80% Lana / 20% Poliéster', 'Hecho en España', 'Entretela interior'],
+      'Pleated trousers with a straight cut that fall perfectly. Formal without the effort.',
+    details: ['80% Wool / 20% Polyester', 'Made in Spain', 'Inner lining'],
     isNew: false,
   },
   {
     id: '4',
     slug: 'camisa-popelin-blanca',
-    name: 'Camisa Popelín Blanca',
-    category: 'Camisas',
+    name: 'White Poplin Shirt',
+    category: 'Shirts',
     price: 110,
     images: [
       'https://images.unsplash.com/photo-1603251579431-8041402bdeda?w=600',
     ],
     sizes: ['XS', 'S', 'M', 'L'],
     colors: [
-      { name: 'Blanco', hex: '#ffffff' },
-      { name: 'Celeste', hex: '#c8dde8' },
+      { name: 'White', hex: '#ffffff' },
+      { name: 'Sky blue', hex: '#c8dde8' },
     ],
     description:
-      'La camisa perfecta en popelín de algodón egipcio. Cuello sin cuello y botones nácar.',
-    details: ['100% Algodón egipcio', 'Hecho en Portugal', 'Planchar a temperatura media'],
+      'The perfect shirt in Egyptian cotton poplin. Collarless neckline and mother-of-pearl buttons.',
+    details: ['100% Egyptian cotton', 'Made in Portugal', 'Iron on medium heat'],
+    isNew: true,
+  },
+  {
+    id: '5',
+    slug: 'falda-plisada-midi',
+    name: 'Pleated Midi Skirt',
+    category: 'Skirts',
+    price: 135,
+    salePrice: 99,
+    images: [
+      'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=600',
+    ],
+    sizes: ['XS', 'S', 'M', 'L'],
+    colors: [
+      { name: 'Navy', hex: '#1e293b' },
+      { name: 'Beige', hex: '#e7ddc9' },
+    ],
+    description:
+      'Flowing pleated midi skirt. Wear it day or night, with any top.',
+    details: ['100% Recycled polyester', 'Made in Portugal', 'Machine wash 30°'],
+    isNew: false,
+  },
+  {
+    id: '6',
+    slug: 'jersey-cashmere-beige',
+    name: 'Beige Cashmere Sweater',
+    category: 'Sweaters',
+    price: 290,
+    images: [
+      'https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=600',
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
+    colors: [
+      { name: 'Beige', hex: '#e8dcc8' },
+      { name: 'Pearl grey', hex: '#c9c9c9' },
+    ],
+    description:
+      'Fine-knit 100% cashmere sweater. Light, warm and soft to the touch — a piece for life.',
+    details: ['100% Cashmere', 'Made in Scotland', 'Hand wash'],
+    isNew: true,
+  },
+  {
+    id: '7',
+    slug: 'abrigo-lana-camel',
+    name: 'Camel Wool Coat',
+    category: 'Coats',
+    price: 320,
+    images: [
+      'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=600',
+    ],
+    sizes: ['S', 'M', 'L'],
+    colors: [
+      { name: 'Camel', hex: '#c19a6b' },
+    ],
+    description:
+      'Wool coat with a straight cut and a classic lapel. The perfect coat for winter.',
+    details: ['90% Wool / 10% Cashmere', 'Made in Italy', 'Dry clean'],
+    isNew: false,
+    isSoldOut: true,
+  },
+  {
+    id: '8',
+    slug: 'vestido-saten-negro',
+    name: 'Black Satin Dress',
+    category: 'Dresses',
+    price: 210,
+    images: [
+      'https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=600',
+    ],
+    sizes: ['XS', 'S', 'M', 'L'],
+    colors: [
+      { name: 'Black', hex: '#0d0d0d' },
+    ],
+    description:
+      'Satin dress with a smooth, flowing fit. Elegant and simple, perfect for evening.',
+    details: ['100% Viscose', 'Made in Spain', 'Hand wash'],
     isNew: true,
   },
 ];

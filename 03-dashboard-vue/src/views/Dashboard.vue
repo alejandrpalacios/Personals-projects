@@ -14,28 +14,28 @@
 
     <!-- Fila inferior: gráfico + pedidos recientes -->
     <div class="bottom-row">
-      <!-- Gráfico de ventas — reemplazar con Chart.js, ApexCharts, etc. -->
-      <div class="card chart-placeholder">
-        <h2 class="section-title">Ventas mensuales</h2>
-        <div class="chart-area" aria-label="Área para gráfico de ventas">
-          <p>[ Gráfico de barras — integrar Chart.js o ApexCharts aquí ]</p>
-          <code>npm install apexcharts vue3-apexcharts</code>
+      <!-- Gráfico de ventas -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="section-title" style="margin-bottom:0">Monthly sales</h2>
+          <span class="chart-total">{{ formatTotal(monthlyTotal) }}</span>
         </div>
+        <SalesChart :points="chartPoints" aria-label="Monthly sales" />
       </div>
 
       <!-- Pedidos recientes -->
       <div class="card">
         <div class="card-header">
-          <h2 class="section-title" style="margin-bottom:0">Pedidos recientes</h2>
-          <RouterLink to="/pedidos" class="btn btn--ghost">Ver todos</RouterLink>
+          <h2 class="section-title" style="margin-bottom:0">Recent orders</h2>
+          <RouterLink to="/pedidos" class="btn btn--ghost">View all</RouterLink>
         </div>
         <table class="data-table" style="margin-top:14px">
           <thead>
             <tr>
-              <th>Pedido</th>
-              <th>Cliente</th>
+              <th>Order</th>
+              <th>Customer</th>
               <th>Total</th>
-              <th>Estado</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -45,7 +45,7 @@
               <td>${{ order.total }}</td>
               <td>
                 <span class="badge" :class="statusBadge(order.status)">
-                  {{ order.status }}
+                  {{ statusLabel(order.status) }}
                 </span>
               </td>
             </tr>
@@ -57,32 +57,33 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import StatsCard from '@/components/StatsCard.vue';
+import SalesChart from '@/components/SalesChart.vue';
+import { ORDERS, statusLabel, statusBadge } from '@/data/mock.js';
 
 // Datos de demo — reemplazar con llamada a API
 const stats = [
-  { label: 'Ingresos totales', value: '$48,295', icon: '💰', trend: 12.4 },
-  { label: 'Pedidos',          value: '1,284',   icon: '📦', trend: 8.1  },
-  { label: 'Clientes nuevos',  value: '340',     icon: '👥', trend: -3.2 },
-  { label: 'Tasa conversión',  value: '3.8%',    icon: '📈', trend: 0.6  },
+  { label: 'Total revenue', value: '$48,295', icon: 'dollar-sign', trend: 12.4 },
+  { label: 'Orders',        value: '1,284',   icon: 'package',     trend: 8.1  },
+  { label: 'New customers', value: '340',     icon: 'users',       trend: -3.2 },
+  { label: 'Conversion rate', value: '3.8%',  icon: 'trending-up', trend: 0.6  },
 ];
 
-const recentOrders = [
-  { id: '4821', customer: 'María García',    total: '128.00', status: 'Enviado'   },
-  { id: '4820', customer: 'Carlos López',    total: '89.50',  status: 'Pendiente' },
-  { id: '4819', customer: 'Laura Martínez',  total: '245.00', status: 'Entregado' },
-  { id: '4818', customer: 'Andrés Ruiz',     total: '67.00',  status: 'Cancelado' },
-  { id: '4817', customer: 'Sofia Jiménez',   total: '312.80', status: 'Enviado'   },
-];
+const recentOrders = ORDERS.slice(0, 5);
 
-function statusBadge(status) {
-  const map = {
-    Enviado:   'badge--info',
-    Pendiente: 'badge--warning',
-    Entregado: 'badge--success',
-    Cancelado: 'badge--danger',
-  };
-  return map[status] ?? '';
+// Ventas de los últimos 6 meses — reemplazar con datos reales
+const monthlyValues = [32000, 35500, 31000, 38900, 41200, 48295];
+const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+
+const chartPoints = computed(() =>
+  monthlyValues.map((value, i) => ({ label: monthLabels[i], value }))
+);
+
+const monthlyTotal = computed(() => monthlyValues.reduce((sum, v) => sum + v, 0));
+
+function formatTotal(value) {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(value);
 }
 </script>
 
@@ -100,26 +101,10 @@ function statusBadge(status) {
   gap: 16px;
 }
 
-.chart-area {
-  height: 260px;
-  background: var(--bg-page);
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  color: var(--text-muted);
-  font-size: 13px;
-  border: 2px dashed var(--border);
-}
-
-.chart-area code {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 12px;
+.chart-total {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .card-header {

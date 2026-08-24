@@ -1,0 +1,75 @@
+---
+const steps = [
+  { icon: '①', title: 'Create your workspace',  desc: 'Sign up and set up your team space in under two minutes. No credit card required.' },
+  { icon: '②', title: 'Import your projects',    desc: 'Bring in tasks from Trello, Asana or a spreadsheet with one click.' },
+  { icon: '③', title: 'Automate the busywork',   desc: 'Let TaskFlow assign, prioritize and remind your team automatically.' },
+  { icon: '④', title: 'Ship with confidence',    desc: 'Track progress in real time and deliver on schedule, every time.' },
+];
+---
+
+<section class="how section" id="how-it-works">
+  <div class="container">
+    <div class="how__header">
+      <span class="section__label">How it works</span>
+      <h2 class="section__title">Get started in minutes</h2>
+      <p class="section__subtitle">From sign-up to your first automated workflow — no onboarding call needed.</p>
+    </div>
+
+    <div class="how__steps">
+      {steps.map((s, i) => (
+        <article class="how-step">
+          <span class="how-step__icon" aria-hidden="true">{s.icon}</span>
+          <h3 class="how-step__title">{s.title}</h3>
+          <p class="how-step__desc">{s.desc}</p>
+          {i < steps.length - 1 && <span class="how-step__connector" aria-hidden="true"></span>}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .how__header { text-align: center; margin-bottom: var(--space-xl); }
+
+  .how__steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-md);
+  }
+
+  .how-step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .how-step__icon {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-primary-light);
+    font-family: var(--font-mono);
+  }
+
+  .how-step__title { font-size: 1.02rem; font-weight: 600; }
+  .how-step__desc  { font-size: 0.88rem; color: var(--color-text-muted); line-height: 1.6; }
+
+  .how-step__connector {
+    position: absolute;
+    top: 0.85rem;
+    left: calc(100% + var(--space-md) / 2);
+    width: var(--space-md);
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-border), transparent);
+    display: block;
+  }
+
+  @media (max-width: 860px) {
+    .how__steps { grid-template-columns: 1fr 1fr; gap: var(--space-lg) var(--space-md); }
+    .how-step__connector { display: none; }
+  }
+
+  @media (max-width: 500px) {
+    .how__steps { grid-template-columns: 1fr; }
+  }
+</style>

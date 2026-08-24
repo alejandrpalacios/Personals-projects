@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
-import { LangProvider } from '@/context/LangContext';
+import { CartProvider } from '@/context/CartContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -17,12 +17,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body>
-        {/* LangProvider debe ser Client Component — envuelve todo lo interactivo */}
-        <LangProvider>
+        {/* CartProvider es Client Component — envuelve todo lo interactivo */}
+        <CartProvider>
           <Navbar />
           <main>{children}</main>
           <Footer />
-        </LangProvider>
+        </CartProvider>
       </body>
     </html>
   );

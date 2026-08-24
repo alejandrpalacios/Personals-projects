@@ -8,6 +8,10 @@ const config = {
     alias: {
       $lib: './src/lib',
     },
+    // Se sirve bajo /nidohomes en el dominio unificado del portafolio
+    paths: {
+      base: '/nidohomes',
+    },
   },
 };
 
