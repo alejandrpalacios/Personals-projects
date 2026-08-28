@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Snip — a link shortener backed by a real Node.js + Firestore API.">
+    <title>Snip | Link Shortener</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="wrap topbar-inner">
+            <a href="/" class="wordmark">Snip<span class="accent">.</span></a>
+            <a href="/" class="back-link">← Alejandro Palacios</a>
+        </div>
+    </header>
+
+    <main class="wrap main">
+        <p class="eyebrow">Backend demo — Node.js + Firestore</p>
+        <h1 class="title">Shorten a link</h1>
+        <p class="subtitle">
+            Real API, real database. Every link is created, redirected and counted
+            server-side — nothing here is faked in the browser.
+        </p>
+
+        <form id="shortenForm" class="shorten-form" novalidate>
+            <input
+                type="url" id="urlInput" name="url"
+                placeholder="https://example.com/a-very-long-url-goes-here"
+                required autocomplete="off"
+            >
+            <button type="submit" class="btn">Shorten</button>
+        </form>
+        <p class="form-error" id="formError"></p>
+
+        <div class="result" id="result" hidden>
+            <span class="result-label">Your short link</span>
+            <div class="result-row">
+                <a href="#" id="resultLink" class="result-link" target="_blank" rel="noopener"></a>
+                <button class="btn-copy" id="copyBtn" type="button">Copy</button>
+            </div>
+        </div>
+
+        <section class="links-section">
+            <h2 class="links-title">Your links <span class="links-count" id="linksCount"></span></h2>
+            <ul class="links-list" id="linksList"></ul>
+            <p class="links-empty" id="linksEmpty">Nothing yet — shorten your first link above.</p>
+        </section>
+
+        <p class="note">
+            Demo data is tied to this browser session — it's deleted the moment you
+            close the tab, and auto-expires after 24h either way, so the database
+            never fills up with other visitors' links.
+        </p>
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

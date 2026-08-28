@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pulse — create a live poll backed by a real Node.js + Firestore API.">
+    <title>Pulse | Live Polls</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <div class="wrap topbar-inner">
+            <a href="." class="wordmark">Pulse<span class="accent">.</span></a>
+            <a href="/" class="back-link">← Alejandro Palacios</a>
+        </div>
+    </header>
+
+    <main class="wrap main">
+
+        <!-- ============================================================
+             VISTA: CREAR ENCUESTA (por defecto, sin ?p= en la URL)
+        ============================================================ -->
+        <section id="createView">
+            <p class="eyebrow">Backend demo — Node.js + Firestore</p>
+            <h1 class="title">Create a live poll</h1>
+            <p class="subtitle">
+                Share the link, watch votes come in. Every vote is validated and
+                counted server-side — one vote per visitor, enforced by the API.
+            </p>
+
+            <form id="pollForm" class="poll-form" novalidate>
+                <div class="field">
+                    <label for="question">Question</label>
+                    <input type="text" id="question" maxlength="140" placeholder="What should we build next?" required>
+                </div>
+
+                <div class="field">
+                    <label>Options</label>
+                    <div class="options-inputs" id="optionsInputs">
+                        <input type="text" class="option-input" maxlength="80" placeholder="Option 1">
+                        <input type="text" class="option-input" maxlength="80" placeholder="Option 2">
+                    </div>
+                    <button type="button" class="btn-add-option" id="addOption">+ Add option</button>
+                </div>
+
+                <button type="submit" class="btn">Create poll</button>
+            </form>
+            <p class="form-error" id="createError"></p>
+
+            <section class="polls-section">
+                <h2 class="polls-title">Your polls <span class="polls-count" id="pollsCount"></span></h2>
+                <ul class="polls-list" id="pollsList"></ul>
+                <p class="polls-empty" id="pollsEmpty">Nothing yet — create your first poll above.</p>
+            </section>
+
+            <p class="note">
+                Demo data is tied to this browser session — it's deleted the moment
+                you close the tab, and auto-expires after 24h either way, so the
+                database never fills up with other visitors' polls.
+            </p>
+        </section>
+
+        <!-- ============================================================
+             VISTA: VER / VOTAR ENCUESTA (con ?p=ID en la URL)
+        ============================================================ -->
+        <section id="pollView" hidden>
+            <p class="eyebrow">Live poll</p>
+            <h1 class="title" id="pollQuestion"></h1>
+            <p class="subtitle" id="pollTotal"></p>
+
+            <div class="poll-options" id="pollOptions"></div>
+            <p class="form-error" id="voteError"></p>
+
+            <a href="." class="create-own">← Create your own poll</a>
+        </section>
+
+    </main>
+
+    <script src="main.js"></script>
+</body>
+</html>

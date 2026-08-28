@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/pulse/api/:path*", "destination": "/api/:path*" },
+    { "source": "/pulse/style.css", "destination": "/style.css" },
+    { "source": "/pulse/main.js", "destination": "/main.js" },
+    { "source": "/pulse/favicon.svg", "destination": "/favicon.svg" },
+    { "source": "/pulse", "destination": "/index.html" },
+    { "source": "/pulse/", "destination": "/index.html" }
+  ]
+}

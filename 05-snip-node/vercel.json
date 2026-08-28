@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    { "source": "/snip/s/:code", "destination": "/api/go/:code" },
+    { "source": "/snip/api/:path*", "destination": "/api/:path*" },
+    { "source": "/snip/style.css", "destination": "/style.css" },
+    { "source": "/snip/main.js", "destination": "/main.js" },
+    { "source": "/snip/favicon.svg", "destination": "/favicon.svg" },
+    { "source": "/snip", "destination": "/index.html" },
+    { "source": "/snip/", "destination": "/index.html" }
+  ]
+}
