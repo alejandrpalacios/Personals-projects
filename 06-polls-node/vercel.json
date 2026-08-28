@@ -4,6 +4,10 @@
     { "source": "/pulse/style.css", "destination": "/style.css" },
     { "source": "/pulse/main.js", "destination": "/main.js" },
     { "source": "/pulse/favicon.svg", "destination": "/favicon.svg" },
+
+    { "source": "/api/polls", "destination": "/api/polls" },
+    { "source": "/api/cleanup", "destination": "/api/cleanup" },
+
     { "source": "/pulse", "destination": "/index.html" },
     { "source": "/pulse/", "destination": "/index.html" }
   ]

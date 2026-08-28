@@ -5,6 +5,10 @@
     { "source": "/snip/style.css", "destination": "/style.css" },
     { "source": "/snip/main.js", "destination": "/main.js" },
     { "source": "/snip/favicon.svg", "destination": "/favicon.svg" },
+
+    { "source": "/api/links", "destination": "/api/links" },
+    { "source": "/api/cleanup", "destination": "/api/cleanup" },
+
     { "source": "/snip", "destination": "/index.html" },
     { "source": "/snip/", "destination": "/index.html" }
   ]
